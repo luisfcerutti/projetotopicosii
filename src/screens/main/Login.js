@@ -26,12 +26,80 @@ class Login extends Component {
             uf: '',
             nome: ''
         },
-        emailEsqueciSenha: ''
+        emailEsqueciSenha: '',
+        dialog: false,
+        mensagemDialog: '',
+        tituloDialog: ''
 
     }
 
     componentDidMount(){
         this.props.onDeslogar()
+    }
+
+    login = () => {
+        if(this.state.user.email.trim().length>5 && this.state.user.password.trim().length>6){
+            this.props.onLogin(this.state.user)
+        }else{
+            this.setState({dialog: true, mensagemDialog: 'Os dados informados são muito curtos para tentar acessar!', tituloDialog: 'Ops!'})
+        }
+    }
+
+    registrar = () => {
+        if(this.state.newUser.email.trim().length>5){
+            if(this.state.newUser.password.trim().length>6){
+                if(this.state.newUser.password===this.state.newUser.rptPassword){
+                    if(this.state.newUser.nome.trim().length>3){
+                        this.props.onRegistrar(this.state.newUser)
+                    }else{
+                        this.setState({dialog: true, mensagemDialog: 'É necessário informar seu nome!', tituloDialog: 'Ops!'})
+                    }            
+                }else{
+                    this.setState({dialog: true, mensagemDialog: 'As senhas devem ser idênticas!', tituloDialog: 'Ops!'})
+                }            
+            }else{
+                this.setState({dialog: true, mensagemDialog: 'A senha inserida é muito curta!', tituloDialog: 'Ops!'})
+            }
+        }else{
+            this.setState({dialog: true, mensagemDialog: 'O email inserido parece inválido!', tituloDialog: 'Ops!'})
+        }
+    }
+
+    esqueciMinhaSenha = () => {
+        if(this.state.emailEsqueciSenha.trim().length>5){
+            this.props.onEsqueciSenha(this.state.emailEsqueciSenha)
+        }else{
+            this.setState({dialog: true, mensagemDialog: 'O email inserido é muito curto', tituloDialog: 'Ops!'})
+        }
+    }
+
+    handleFechaDialog = () => {
+        this.setState({dialog: false})
+        if(this.state.mode==='Login'){
+            this.setState({
+                user: { 
+                    email: '', 
+                    password: '' 
+                }            
+            })
+        }
+        if(this.state.mode==='Registro'){
+            this.setState({
+                newUser: {
+                    email: '',
+                    password: '',
+                    rptPassword: '',
+                    cidade: '',
+                    uf: '',
+                    nome: ''
+                }
+            })
+        }
+        if(this.state.mode==='EsqueciSenha'){
+            this.setState({
+                emailEsqueciSenha: ''
+            })
+        }
     }
 
     renderMode = () => {
@@ -98,6 +166,17 @@ class Login extends Component {
                         {this.props.mensagemErroLogin}
                     </Dialog.Description>                    
                     <Dialog.Button color={'#003266'} bold={true} label="OK" onPress={() => { this.props.onDismissError(); this.setState({ user: { ...this.state.user, email: '', senha: '' }}) }} />
+                </Dialog.Container>
+                <Dialog.Container
+                headerStyle={{backgroundColor: 'ghostwhite'}} 
+                contentStyle={{backgroundColor: 'ghostwhite'}}
+                footerStyle={{backgroundColor: 'ghostwhite'}}
+                visible={this.state.dialog}>
+                    <Dialog.Title style={{...styles.informacoesText, fontSize: 20, textAlign: 'center'}}>{this.state.tituloDialog}</Dialog.Title>
+                    <Dialog.Description style={{...styles.informacoesText, fontSize: 18, textAlign: 'justify'}}>
+                        {this.state.mensagemDialog}
+                    </Dialog.Description>                    
+                    <Dialog.Button color={'#003266'} bold={true} label="OK" onPress={this.handleFechaDialog()} />
                 </Dialog.Container>
                     {this.loadingOuRender()}
                 </Container>
