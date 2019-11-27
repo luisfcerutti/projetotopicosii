@@ -5,9 +5,7 @@ import { Container, Content, Text, Spinner } from 'native-base'
 import Dialog from "react-native-dialog"
 import { connect } from 'react-redux'
 //Components e utilitários internos
-import Header from '../../components/HeaderComponent'
 import commonStyle from '../../customization/commonStyles'
-import FooterComponent from '../../components/FooterComponent';
 import { login, registrar, dismissErrorLogin, forgotPassword, deslogar } from '../../store/actions/user'
 
 class Login extends Component {
@@ -183,9 +181,9 @@ class Login extends Component {
             )
         }
         
-    }
-    
 }
+    
+
 
 const styles = StyleSheet.create({
     container: commonStyle.container
