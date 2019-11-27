@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "640364840836",
+    "firebase_url": "https://topicosii-ae1c5.firebaseio.com",
+    "project_id": "topicosii-ae1c5",
+    "storage_bucket": "topicosii-ae1c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640364840836:android:f26ba7eb647f010be33fd1",
+        "android_client_info": {
+          "package_name": "com.projetosupermercado"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640364840836-8h3dsuglqnf6v067urp7h41b09397t3h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgZH01ruXUZUTdgAPullcEA7r7mrfhn34"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640364840836-8h3dsuglqnf6v067urp7h41b09397t3h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
