@@ -3,7 +3,8 @@ import { ALTERA_LISTA_COMPRAS,
     COMPRA_FINALIZADA,
     LOADING_MERCADO,
     MERCADO_LOADED,
-    SET_MERCADO
+    SET_MERCADO,
+    SET_PRODUTOS_MERCADO
 } from './actionTypes'
 import firebase from 'react-native-firebase'
 
@@ -45,13 +46,68 @@ export const setMercado = (mercado) => {
     }
 }
 
-export const fetchDadosMercado = (uf, cidade, mercadoId) => {
+export const setProdutosMercado = (produtos) => {
+    return {
+        type: SET_PRODUTOS_MERCADO,
+        payload: produtos
+    }
+}
+
+export const fetchProdutosMercado = (mercadoId) => {
     return dispatch => {
         dispatch(loadingMercado())
-        firebase.firestore().collection('estados').doc(`${uf}`).collection('cidades').doc(`${cidade}`)
-        .collection('mercados').doc(`${mercadoId}`).get()
+        let produtosMercado = {
+            frutas: [],
+            alimentos: [],
+            produtosLimpeza: []
+        }
+        firebase.firestore().collection('mercados').doc(`${mercadoId}`).collection('categorias').get()
         .then((res) => {
-            
+            if(!res.empty){
+                res.forEach((doc) => {
+                    produtosMercado = {
+                        ...produtosMercado,
+                        [doc.id]: {
+                            ...doc.data()
+                        }
+                    }
+                })
+                dispatch(setProdutosMercado(produtosMercado))
+            }
+        })
+    }
+}
+
+export const fetchDadosMercado = (mercadoId) => {
+    return dispatch => {
+        dispatch(loadingMercado())
+        firebase.firestore().collection('mercados').doc(`${mercadoId}`).get()
+        .then((res) => {
+            if(res.exists()){
+                let mercado = res.data()
+                dispatch(setMercado(mercado))
+                dispatch(mercadoLoaded())
+                dispatch(fetchProdutosMercado(mercadoId))
+            }
+        })
+        .catch((err) => {
+
+        })
+    }
+}
+
+export const finalizaCompra = (userKey, listaCompras, valorCompra, nomeMercado) => {
+    return dispatch => {
+        dispatch(finalizandoCompra())
+        let compraRealizada = {
+            valor: valorCompra,
+            data: new Date(),
+            mercado: nomeMercado,
+            produtos: listaCompras
+        }
+        firebase.firestore().collection('usuarios').doc(`${userKey}`).collection('comprasRealizadas').add(compraRealizada)
+        .then(() => {
+            dispatch(compraFinalizada())
         })
         .catch((err) => {
 
