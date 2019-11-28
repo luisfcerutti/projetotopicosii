@@ -137,7 +137,7 @@ class Login extends Component {
         if(this.props.isAuthenticating){
             return(
                 <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <Spinner color='#003266' />
+                    <Spinner color='#C20114' />
                 </View>
             )
         }else{
@@ -163,7 +163,7 @@ class Login extends Component {
                     <Dialog.Description style={{...styles.informacoesText, fontSize: 18, textAlign: 'justify'}}>
                         {this.props.mensagemErroLogin}
                     </Dialog.Description>                    
-                    <Dialog.Button color={'#003266'} bold={true} label="OK" onPress={() => { this.props.onDismissError(); this.setState({ user: { ...this.state.user, email: '', senha: '' }}) }} />
+                    <Dialog.Button color={'#C20114'} bold={true} label="OK" onPress={() => { this.props.onDismissError(); this.setState({ user: { ...this.state.user, email: '', senha: '' }}) }} />
                 </Dialog.Container>
                 <Dialog.Container
                 headerStyle={{backgroundColor: 'ghostwhite'}} 
@@ -174,7 +174,7 @@ class Login extends Component {
                     <Dialog.Description style={{...styles.informacoesText, fontSize: 18, textAlign: 'justify'}}>
                         {this.state.mensagemDialog}
                     </Dialog.Description>                    
-                    <Dialog.Button color={'#003266'} bold={true} label="OK" onPress={this.handleFechaDialog()} />
+                    <Dialog.Button color={'#C20114'} bold={true} label="OK" onPress={this.handleFechaDialog()} />
                 </Dialog.Container>
                     {this.loadingOuRender()}
                 </Container>
@@ -186,7 +186,8 @@ class Login extends Component {
 
 
 const styles = StyleSheet.create({
-    container: commonStyle.container
+    container: commonStyle.container,
+    informacoesText: commonStyle.informacoesText
 })
 
 const mapStateToProps = ( { user }) => {

@@ -1,6 +1,6 @@
 //PADRÃO
 import React, { Component } from 'react'
-import { StyleSheet, View, FlatList } from 'react-native'
+import { StyleSheet, View, FlatList, TouchableOpacity } from 'react-native'
 import { Container, Content, Text, Spinner, Card, CardItem, Body } from 'native-base'
 import { Row, Grid, Col } from 'react-native-easy-grid'
 import { connect } from 'react-redux'
@@ -8,13 +8,14 @@ import { connect } from 'react-redux'
 import Header from '../../../components/HeaderComponent'
 import commonStyle from '../../../customization/commonStyles'
 import FooterComponent from '../../../components/FooterComponent';
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { fetchDadosMercado } from '../../../store/actions/mercado'
 
 class ListaMercados extends Component {
 
 
     buscaDetalheMercado = (mercadoKey) => {
-
+        this.props.buscaMercado(mercadoKey)
+        this.props.navigation.navigate('DetalhesMercado')
     }
 
     loadingOuNao = () => {
@@ -92,8 +93,7 @@ const mapStateToProps = ( { cidade }) => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        onPesquisaCidadesUf: (uf) => dispatch(fetchCidadesUf(uf)),
-        onSelecionaCidade: (cidade) => dispatch(fetchMercadosCidade(cidade))
+        buscaMercado: (mercadoKey) => dispatch(fetchDadosMercado(mercadoKey))
     }
 }
 
