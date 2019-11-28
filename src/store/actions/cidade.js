@@ -51,6 +51,8 @@ export const fetchMercadosCidade = (uf, cidade) => {
                 listaMercados = Object.assign([], res.data().listaMercados)
             }
             dispatch(setMercadosCidade(listaMercados))
+            dispatch(setCidade(cidade))
+            dispatch(setUf(uf))
             dispatch(cidadeLoaded())
         })
         .catch((err) => {
@@ -91,8 +93,8 @@ export const fetchCidadesUf = (uf) => {
             if(!res.empty){
                 res.forEach((doc) => {                    
                     cidadesList.push({
-                        value: doc.id(),
-                        label: doc.id()
+                        value: doc.id,
+                        label: doc.id
                     })
                 })
             }
@@ -102,7 +104,7 @@ export const fetchCidadesUf = (uf) => {
 
         })
         .catch((err) => {
-
+            
         })
     }
 }

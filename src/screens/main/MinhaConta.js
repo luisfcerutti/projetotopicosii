@@ -1,7 +1,7 @@
 //PADRÃO
 import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
-import { Container, Content, Text, Spinner } from 'native-base'
+import { StyleSheet, View } from 'react-native'
+import { Container, Content, Text, Spinner, Icon, Input, Item, Button } from 'native-base'
 import { Row, Grid, Col } from 'react-native-easy-grid'
 import Dialog from "react-native-dialog"
 import { connect } from 'react-redux'
@@ -19,11 +19,10 @@ class MinhaConta extends Component {
         senha: '',
         novoNome: '',
         novoEmail: '',
-        novaCidade: '',
-        novaUf: '',
         tituloDialog: '',
         mensagemDialog: '',
-        dialog: false
+        dialog: false,
+        mode: 'padrao'
     }
 
     componentDidUpdate = (prevProps) => {
@@ -36,19 +35,6 @@ class MinhaConta extends Component {
         }
     }
 
-    mudaLocal = () => {
-        if(this.state.novaCidade.trim().length>1){
-            if(this.state.novaUf.length===2){
-                this.props.onEditLocal(this.props.usuarioKey, this.state.novaCidade, this.state.novaUf)
-                this.setState({ novaCidade: '' })
-            }else{
-                this.setState({tituloDialog: 'Atenção!', mensagemDialog: 'O campo UF deve conter os dois digitos referentes à Unidade da Federação.', dialog: true})
-            }
-        }else{
-            this.setState({tituloDialog: 'Atenção!', mensagemDialog: 'O nome da cidade é muito pequeno.', dialog: true})
-        }
-    }
-
     mudaSenha = () => {
         if(this.state.senha.trim().length>=6){
 
@@ -56,7 +42,7 @@ class MinhaConta extends Component {
             
                 if(this.state.novaSenha === this.state.repitaNovaSenha){
                     this.props.onAlteraSenha(this.state.senha, this.state.novaSenha)
-                    this.setState({ senha: '', novaSenha: '', repitaNovaSenha: '' })
+                    this.setState({ senha: '', novaSenha: '', repitaNovaSenha: '', mode: 'padrao' })
                 }else{
                     this.setState({tituloDialog: 'Atenção!', mensagemDialog: 'Os campos nova senha e repita nova senha devem ser idênticos.', dialog: true})
                 }
@@ -78,7 +64,7 @@ class MinhaConta extends Component {
         if(this.state.senha.trim().length>=6){
 
             this.props.onEditEmail(this.state.senha, this.state.novoEmail, this.props.usuarioKey)
-            this.setState({ senha: '', novoEmail: '' })
+            this.setState({ senha: '', novoEmail: '', mode: 'padrao' })
              
         }else{
             this.setState({tituloDialog: 'Atenção!', mensagemDialog: 'Sua senha contém no mínimo 6 caracteres.', dialog: true})
@@ -89,14 +75,164 @@ class MinhaConta extends Component {
     mudaNome = () => {
         if(this.state.novoNome.trim().length>5){
             this.props.onEditNome(this.props.usuarioKey, this.state.novoNome)
-            this.setState({ novoNome: ''})
+            this.setState({ novoNome: '', mode: 'padrao'})
         }else{
             this.setState({tituloDialog: 'Atenção!', mensagemDialog: 'Seu nome parece muito curto.', dialog: true})
         }
     }
+    
+    renderMode = () => {
+        switch(this.state.mode){
+            case 'padrao': {
+                return(
+                    <View>
+                        <Row>
+                           <Text>Meus Dados</Text>
+                       </Row>
+                       <Row>
+                           <Text>
+                               Nome: {this.props.nome}
+                           </Text>
+                       </Row>
+                       <Row>
+                           <Text>
+                               Email: {this.props.email}
+                           </Text>
+                       </Row>
+                       <Row>
+                           <Button onPress={() => this.setState({mode: 'alteraDados'})}>
+                               <Text>Alterar Dados</Text>
+                           </Button>
+                       </Row>
+                       <Row>
+                           <Button onPress={() => this.setState({mode: 'alteraEmail'})}>
+                               <Text>Alterar Email</Text>
+                           </Button>
+                       </Row>
+                       <Row>
+                           <Button onPress={() => this.setState({mode: 'alteraSenha'})}>
+                               <Text>Alterar Senha</Text>
+                           </Button>
+                       </Row>
+                    </View>
+                )
+            }
+            case 'alteraEmail': {
+                return(
+                    <View>
+                        <Row>
+                            <Text>
+                                Alterar Email
+                            </Text>
+                        </Row>                        
+                        <Row>
+                            <Item style={{width: '100%'}}>
+                                <Icon name="md-at"/>
+                                <Input placeholder="Novo email" onChangeText={(text) => this.setState({novoEmail: text})}/>
+                            </Item>
+                        </Row>
+                        <Row>
+                            <Item style={{width: '100%'}}>
+                                <Icon name="md-key"/>
+                                <Input placeholder="Digite sua senha" 
+                                secureTextEntry={true}
+                                onChangeText={(text) => this.setState({senha: text})}/>
+                            </Item>
+                        </Row>
+                        <Row>
+                            <Button onPress={() => this.setState({mode: 'padrao'})}>
+                                <Text>Cancelar</Text>
+                            </Button>
+                        </Row>
+                        <Row>
+                            <Button onPress={() => this.mudaEmail()}>
+                                <Text>Alterar</Text>
+                            </Button>
+                        </Row>
+                    </View>
+                )
+            }
+            case 'alteraSenha': {
+                return(
+                    <View>
+                        <Row>
+                            <Text>
+                                Alterar Senha
+                            </Text>
+                        </Row>                        
+                        <Row>
+                            <Item style={{width: '100%'}}>
+                                <Icon name="md-key"/>
+                                <Input placeholder="Digite sua senha" 
+                                secureTextEntry={true}
+                                onChangeText={(text) => this.setState({senha: text})}/>
+                            </Item>
+                        </Row>
+                        <Row>
+                            <Item style={{width: '100%'}}>
+                                <Icon name="md-key"/>
+                                <Input placeholder="Digite a nova senha" 
+                                secureTextEntry={true}
+                                onChangeText={(text) => this.setState({novaSenha: text})}/>
+                            </Item>
+                        </Row>
+                        <Row>
+                            <Item style={{width: '100%'}}>
+                                <Icon name="md-key"/>
+                                <Input placeholder="Repita a nova senha" 
+                                secureTextEntry={true}
+                                onChangeText={(text) => this.setState({repitaNovaSenha: text})}/>
+                            </Item>
+                        </Row>
+                        <Row>
+                            <Button onPress={() => this.setState({mode: 'padrao'})}>
+                                <Text>Cancelar</Text>
+                            </Button>
+                        </Row>
+                        <Row>
+                            <Button onPress={() => this.mudaSenha()}>
+                                <Text>Alterar</Text>
+                            </Button>
+                        </Row>
+                    </View>
+                )
+            }
+            case 'alteraDados': {
+                return(
+                    <View>
+                        <Row>
+                            <Text>
+                                Alterar Dados
+                            </Text>
+                        </Row>                        
+                        <Row>
+                            <Item style={{width: '100%'}}>
+                                <Icon name="md-person"/>
+                                <Input placeholder="Digite o novo nome"
+                                onChangeText={(text) => this.setState({novoNome: text})}/>
+                            </Item>
+                        </Row>
+                        <Row>
+                            <Button onPress={() => this.setState({mode: 'padrao'})}>
+                                <Text>Cancelar</Text>
+                            </Button>
+                        </Row>
+                        <Row>
+                            <Button onPress={() => this.mudaNome()}>
+                                <Text>Alterar</Text>
+                            </Button>
+                        </Row>
+                    </View>
+                )
+            }
+            default: {
+                return(
+                    <View>
 
-    componentDidMount(){
-        this.setState({ novaUf: this.props.uf })
+                    </View>
+                )
+            }
+        }
     }
 
     loadingOuNao = () => {
@@ -109,7 +245,9 @@ class MinhaConta extends Component {
         }else{
             return(
                 <View>
-                    
+                    <Grid>
+                       {this.renderMode()}
+                    </Grid>
                 </View>
             )
         }
@@ -149,8 +287,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = ({ user }) => {
     return {
         nome: user.nome,
-        cidade: user.cidade,
-        uf: user.uf,
         email: user.email,
         usuarioKey: user.key,
         isChangingPassword: user.isChangingPassword,

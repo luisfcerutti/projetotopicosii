@@ -1,9 +1,10 @@
 //PADRÃO
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Container, Content, Text, Spinner } from 'native-base'
+import { Container, Content, Text, Spinner, Button } from 'native-base'
 import { Dropdown } from 'react-native-material-dropdown';
 import { connect } from 'react-redux'
+import { Row, Grid, Col } from 'react-native-easy-grid'
 import Dialog from "react-native-dialog"
 //Components e utilitários internos
 import Header from '../../components/HeaderComponent'
@@ -35,19 +36,15 @@ class Home extends Component {
 
     onChangeText = (value, index) => {
         this.setState({ selectedValue: value, selectedLabel: estados[index].label })
+        if(this.state.selectedLabel!==null){
+            this.props.onPesquisaCidadesUf(this.state.selectedLabel)
+            this.setState({pesquisaRealizada: true})
+        }
     }
 
     onChangeText2 = (value, index) => {
         this.setState({ selectedValueCidade: value, selectedLabelCidade: this.props.cidadesList[index].label })
-    }
-
-    pesquisaCidadesUf = () => {
-        if(this.state.selectedLabel!==null){
-            this.props.onPesquisaCidadesUf(this.state.selectedLabel)
-        }else{
-            this.setState({dialog: true, mensagemDialog: 'É necessário selecionar um estado para realizar a pesquisa', tituloDialog: 'Atenção!'})
-        }
-    }
+    }   
 
     pesquisaMercadosCidade = () => {
         if(this.state.selectedLabelCidade!==null){
@@ -70,38 +67,54 @@ class Home extends Component {
                 if(this.props.cidadesList.length>0){
                     return(
                         <View>
-                            <Dropdown
-                                containerStyle={{
-                                    height: 40,
-                                    width: '95%',
-                                    borderColor: '#C20114',
-                                    borderWidth: 0.5,
-                                    borderRadius: 4,
-                                    justifyContent: 'center'
-                                }}
-                                data={this.props.cidadesList}
-                                itemTextStyle={{ ...styles.informacoesText, textAlign: 'center' }}
-                                labelTextStyle={{ ...styles.informacoesText, textAlign: 'center' }}
-                                style={{ fontFamily: 'Montserrat Medium', fontWeight: 'normal', textAlign: 'center' }}
-                                onChangeText={this.onChangeText2}
-                                textColor='#C20114'
-                                inputContainerPadding={0}
-                                dropdownOffset={{ top: 5, left: 0 }}
-                                lineWidth={0}
-                            />
+                            <Row>
+                                <Text>
+                                    Selecione a cidade:
+                                </Text>
+                            </Row>
+                            <Row>
+                                <Dropdown
+                                    containerStyle={{
+                                        height: 40,
+                                        width: '95%',
+                                        borderColor: '#C20114',
+                                        borderWidth: 0.5,
+                                        borderRadius: 4,
+                                        justifyContent: 'center'
+                                    }}
+                                    data={this.props.cidadesList}
+                                    itemTextStyle={{ ...styles.informacoesText, textAlign: 'center' }}
+                                    labelTextStyle={{ ...styles.informacoesText, textAlign: 'center' }}
+                                    style={{ fontFamily: 'Montserrat Medium', fontWeight: 'normal', textAlign: 'center' }}
+                                    onChangeText={this.onChangeText2}
+                                    textColor='#C20114'
+                                    inputContainerPadding={0}
+                                    dropdownOffset={{ top: 5, left: 0 }}
+                                    lineWidth={0}
+                                />
+                            </Row>
+                            <Row style={{marginTop: 10}}>
+                                <Button onPress={() => this.pesquisaMercadosCidade()}>
+                                    <Text>Pesquisar Mercados</Text>
+                                </Button>
+                            </Row>
                         </View>
                     )
                 }else{
                     return(
                         <View>
-                            <Text>Não há nenhuma cidade cadastrada nesse estado!</Text>
+                            <Row>                            
+                                <Text>Não há nenhuma cidade cadastrada nesse estado!</Text>
+                            </Row>
                         </View>
                     )
                 }
             }else{
                 return(
                     <View>
-                        <Text>Selecione acima o estado que deseja buscar.</Text>
+                        <Row>
+                            <Text>Selecione acima o estado que deseja buscar.</Text>
+                        </Row>
                     </View>
                 )
             }
@@ -124,26 +137,33 @@ class Home extends Component {
                     <Dialog.Button color={'#C20114'} bold={true} label="OK" onPress={() => this.setState({dialog: false})} />
                 </Dialog.Container>
                 <Content padder>
-                        <Dropdown
-                                containerStyle={{
-                                    height: 40,
-                                    width: '95%',
-                                    borderColor: '#C20114',
-                                    borderWidth: 0.5,
-                                    borderRadius: 4,
-                                    justifyContent: 'center'
-                                }}
-                                data={estados}
-                                itemTextStyle={{ ...styles.informacoesText, textAlign: 'center' }}
-                                labelTextStyle={{ ...styles.informacoesText, textAlign: 'center' }}
-                                style={{ fontFamily: 'Montserrat Medium', fontWeight: 'normal', textAlign: 'center' }}
-                                onChangeText={this.onChangeText}
-                                textColor='#C20114'
-                                inputContainerPadding={0}
-                                dropdownOffset={{ top: 5, left: 0 }}
-                                lineWidth={0}
-                        />
+                    <Grid>
+                        <Row>
+                            <Text>Selecione o estado</Text>
+                        </Row>
+                        <Row>
+                            <Dropdown
+                                    containerStyle={{
+                                        height: 40,
+                                        width: '95%',
+                                        borderColor: '#C20114',
+                                        borderWidth: 0.5,
+                                        borderRadius: 4,
+                                        justifyContent: 'center'
+                                    }}
+                                    data={estados}
+                                    itemTextStyle={{ ...styles.informacoesText, textAlign: 'center' }}
+                                    labelTextStyle={{ ...styles.informacoesText, textAlign: 'center' }}
+                                    style={{ fontFamily: 'Montserrat Medium', fontWeight: 'normal', textAlign: 'center' }}
+                                    onChangeText={this.onChangeText}
+                                    textColor='#C20114'
+                                    inputContainerPadding={0}
+                                    dropdownOffset={{ top: 5, left: 0 }}
+                                    lineWidth={0}
+                            />
+                        </Row>
                         {this.pesquisaOuNao()}
+                    </Grid>
                 </Content>
                 <FooterComponent />
             </Container>
