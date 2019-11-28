@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import Header from '../../components/HeaderComponent'
 import commonStyle from '../../customization/commonStyles'
 import FooterComponent from '../../components/FooterComponent';
+import { addMetodoPagamento, removeMetodoPagamento } from '../../store/actions/user'
 
 class ConfiguracoesPagamento extends Component {
  
@@ -26,23 +27,24 @@ class ConfiguracoesPagamento extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: commonStyle.container
+    container: commonStyle.container,
+    informacoesText: commonStyle.informacoesText,
+    titulo: commonStyle.tituloText
 })
 
 
 const mapStateToProps = ( { user }) => {
     return {        
-        isAuthenticated: user.isAuthenticated,
-        isAuthenticating: user.isAuthenticating,
-        erroLogin: user.erroLogin,
-        mensagemErroLogin: user.mensagemErroLogin,
-        tituloErroLogin: user.tituloErroLogin
+        usuarioKey: user.key,
+        isLoadingMetodos: user.isLoadingMetodos,
+        metodosPagamento: user.metodosPagamento
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return{
-        //onLogin: (user) => dispatch(login(user))
+        onAddMetodo: (userKey, metodo) => dispatch(addMetodoPagamento(userKey, metodo)),
+        onRemoveMetodo: (userKey, metodoKey) => dispatch(removeMetodoPagamento(userKey, metodoKey))
     }
 }
 

@@ -12,7 +12,10 @@ import {
     CHANGING_PASSWORD,
     PASSWORD_CHANGED,
     DISMISS_ERROR_LOGIN,
-    DADOS_ALTERADOS    
+    DADOS_ALTERADOS,    
+    LOADING_METODOS_PAGAMENTO,
+    METODOS_PAGAMENTO_LOADED,
+    SET_METODOS_PAGAMENTO
 } from './actionTypes'
 import firebase from 'react-native-firebase'
 
@@ -384,6 +387,77 @@ export const editLocal = (usuarioKey, novaCidade, novaUf) => {
         })
         .catch((err)=>{
             dispatch(dadosAlterados({ titulo: 'Erro!', mensagem: 'Ocorreu um erro ao tentar alterar o seu local!' }))
+        })
+    }
+}
+
+// MÉTODOS PAGAMENTO
+
+export const loadingMetodosPagamento = () => {
+    return {
+        type: LOADING_METODOS_PAGAMENTO
+    }
+}
+
+export const metodosPagamentoLoaded = () => {
+    return {
+        type: METODOS_PAGAMENTO_LOADED
+    }
+}
+
+export const setMetodosPagamento = (metodos) => {
+    return {
+        type: SET_METODOS_PAGAMENTO,
+        payload: metodos
+    }
+}
+
+export const fetchMetodosPagamento = (userKey) => {
+    return dispatch => {
+        dispatch(loadingMetodosPagamento())
+        let metodos = []
+        firebase.firestore().collection('usuarios').doc(`${userKey}`).collection('metodosPagamento').get()
+        .then((res) => {
+            if(!res.empty){
+                res.forEach((doc) => {
+                    let metodo = {
+                        key: doc.id,
+                        ...doc.data()
+                    }
+                    metodos.push(metodo)
+                })
+            }
+            dispatch(setMetodosPagamento(metodos))
+            dispatch(metodosPagamentoLoaded())
+        })
+        .catch((err) => {
+
+        })
+    }
+}
+
+export const removeMetodoPagamento = (userKey, metodoKey) => {
+    return dispatch => {
+        dispatch(loadingMetodosPagamento())
+        firebase.firestore().collection('usuarios').doc(`${userKey}`).collection('metodosPagamento').doc(`${metodoKey}`)
+        .delete().then(() => {
+            dispatch(fetchMetodosPagamento(userKey))
+        })
+        .catch((err) => {
+
+        })
+    }
+}
+
+export const addMetodoPagamento = (userKey, metodo) => {
+    return dispatch => {
+        dispatch(loadingMetodosPagamento())
+        firebase.firestore().collection('usuarios').doc(`${userKey}`).collection('metodosPagamento').add(metodo)
+        .then(() => {
+            dispatch(fetchMetodosPagamento(userKey))
+        })
+        .catch((err) => {
+
         })
     }
 }
