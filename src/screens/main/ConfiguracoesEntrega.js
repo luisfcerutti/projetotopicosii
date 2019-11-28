@@ -23,13 +23,17 @@ class ConfiguracoesEntrega extends Component {
     }
 
     alteraEntrega = () => {
-        this.props.onAlteraEntrega(this.state.localEntrega)
+        this.props.onAlteraEntrega(this.state.localEntrega, this.props.usuarioKey)
     }
 
     componentDidUpdate = (prevProps) => {
         if(prevProps.isLoadingEntregas && !this.props.isLoadingEntregas){
             this.setState({ localEntrega: { ...this.props.configuracaoEntrega }})
         }
+    }
+
+    componentDidMount(){
+        this.setState({ localEntrega: { ...this.props.configuracaoEntrega }})
     }
 
     renderEncomendas = () => {
@@ -91,6 +95,7 @@ class ConfiguracoesEntrega extends Component {
                             <Item style={{width: '100%'}}>
                                 <Icon name="md-at"/>
                                 <Input 
+                                value={this.state.localEntrega.rua}
                                 placeholder={this.state.localEntrega.rua.length>0 ? this.state.localEntrega.rua : 'Rua'} 
                                 onChangeText={(text) => this.setState({localEntrega: { ...this.state.localEntrega, rua: text}})}/>
                             </Item>
@@ -98,21 +103,27 @@ class ConfiguracoesEntrega extends Component {
                         <Row>
                             <Item style={{width: '100%'}}>
                                 <Icon name="md-key"/>
-                                <Input placeholder={this.state.localEntrega.numero.length>0 ? this.state.localEntrega.numero : 'Número'} 
+                                <Input 
+                                value={this.state.localEntrega.numero}
+                                placeholder={this.state.localEntrega.numero.length>0 ? this.state.localEntrega.numero : 'Número'} 
                                 onChangeText={(text) => this.setState({localEntrega: { ...this.state.localEntrega, numero: text}})}/>
                             </Item>
                         </Row>
                         <Row>
                             <Item style={{width: '100%'}}>
                                 <Icon name="md-key"/>
-                                <Input placeholder={this.state.localEntrega.complemento.length>0 ? this.state.localEntrega.complemento : 'Complemento'} 
+                                <Input
+                                value={this.state.localEntrega.complemento} 
+                                placeholder={this.state.localEntrega.complemento.length>0 ? this.state.localEntrega.complemento : 'Complemento'} 
                                 onChangeText={(text) => this.setState({localEntrega: { ...this.state.localEntrega, complemento: text}})}/>
                             </Item>
                         </Row>
                         <Row>
                             <Item style={{width: '100%'}}>
                                 <Icon name="md-key"/>
-                                <Input placeholder={this.state.localEntrega.bairro.length>0 ? this.state.localEntrega.bairro : 'Bairro'} 
+                                <Input
+                                value={this.state.localEntrega.bairro} 
+                                placeholder={this.state.localEntrega.bairro.length>0 ? this.state.localEntrega.bairro : 'Bairro'} 
                                 onChangeText={(text) => this.setState({localEntrega: { ...this.state.localEntrega, bairro: text}})}/>
                             </Item>
                         </Row>
