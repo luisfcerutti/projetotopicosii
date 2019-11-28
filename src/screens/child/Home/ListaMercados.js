@@ -1,21 +1,73 @@
 //PADRÃO
 import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
-import { Container, Content, Text, Spinner } from 'native-base'
+import { StyleSheet, View, FlatList } from 'react-native'
+import { Container, Content, Text, Spinner, Card, CardItem, Body } from 'native-base'
+import { Row, Grid, Col } from 'react-native-easy-grid'
 import { connect } from 'react-redux'
 //Components e utilitários internos
 import Header from '../../../components/HeaderComponent'
 import commonStyle from '../../../customization/commonStyles'
 import FooterComponent from '../../../components/FooterComponent';
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 class ListaMercados extends Component {
+
+
+    buscaDetalheMercado = (mercadoKey) => {
+
+    }
+
+    loadingOuNao = () => {
+        if(this.props.isLoadingCidade){
+            return(
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Spinner color='#C20114' />
+                </View>
+            )
+        }else{
+            return(
+                <View>
+                    <Grid>
+                        <Row style={{marginBottom: 25}}>
+                            <Text style={styles.titulo}>Mercados em {this.props.cidadeSelecionada+"/"+this.props.ufSelecionado}</Text>
+                        </Row>
+                        <FlatList
+                            data={this.props.listaMercados}
+                            keyExtractor={(item, index) => `${index}`}
+                            renderItem={({ item, index }) => (
+                                <TouchableOpacity onPress={()=>this.buscaDetalheMercado(item.key)}>
+                                    <Row style={{ minHeight: 80, marginTop: 10 }}>
+                                        <Card>
+                                            <CardItem header>
+                                            <Text>{item.nome}</Text>
+                                            </CardItem>
+                                            <CardItem>
+                                                <Body>
+                                                    <Text>
+                                                    //Your text here
+                                                    </Text>
+                                                </Body>
+                                            </CardItem>
+                                            <CardItem footer>
+                                                <Text>Visualizar</Text>
+                                            </CardItem>
+                                        </Card>
+                                    </Row>
+                                </TouchableOpacity>
+                            )}
+                        />
+                    </Grid>
+                </View>
+            )
+        }
+    }
  
     render(){
         return(
             <Container style={styles.container}>
                 <Header />
                 <Content padder>
-                    <Text>Lista Mercados</Text>
+                    {this.loadingOuNao()}
                 </Content>
                 <FooterComponent />
             </Container>
@@ -25,13 +77,16 @@ class ListaMercados extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: commonStyle.container
+    container: commonStyle.container,
+    titulo: commonStyle.tituloText
 })
 
 const mapStateToProps = ( { cidade }) => {
     return {        
         listaMercados: cidade.listaMercados,
-        isLoadingCidade: cidade.isLoadingCidade
+        isLoadingCidade: cidade.isLoadingCidade,
+        cidadeSelecionada: cidade.cidadeSelecionada,
+        ufSelecionado: cidade.ufSelecionado
     }
 }
 

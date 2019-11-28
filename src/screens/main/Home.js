@@ -51,7 +51,7 @@ class Home extends Component {
 
     pesquisaMercadosCidade = () => {
         if(this.state.selectedLabelCidade!==null){
-            this.props.onSelecionaCidade(this.state.selectedLabelCidade)
+            this.props.onSelecionaCidade(this.state.selectedLabel, this.state.selectedLabelCidade)
             this.props.navigation.navigate('ListaMercados')
         }else{
             this.setState({dialog: true, mensagemDialog: 'A cidade deve ser selecionada!', tituloDialog: 'Atenção!'})
@@ -167,7 +167,7 @@ const mapStateToProps = ( { cidade }) => {
 const mapDispatchToProps = dispatch => {
     return{
         onPesquisaCidadesUf: (uf) => dispatch(fetchCidadesUf(uf)),
-        onSelecionaCidade: (cidade) => dispatch(fetchMercadosCidade(cidade))
+        onSelecionaCidade: (uf, cidade) => dispatch(fetchMercadosCidade(uf, cidade))
     }
 }
 
