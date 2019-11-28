@@ -16,6 +16,7 @@ import { USER_LOGGED_IN,
     LOADING_ENTREGAS,
     ENTREGAS_LOADED,
     SET_ENTREGAS,
+    SET_CONFIGURACAO_ENTREGA,
     } from '../actions/actionTypes'
 
 const initialState = {
@@ -182,6 +183,12 @@ const reducer = (state=initialState, action) => {
             return {
                 ...state,
                 minhasEntregas: action.payload
+            }
+        }
+        case SET_CONFIGURACAO_ENTREGA: {
+            return {
+                ...state,
+                configuracaoEntrega: action.payload
             }
         }      
         default: {

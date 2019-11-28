@@ -18,7 +18,8 @@ import {
     SET_METODOS_PAGAMENTO,
     LOADING_ENTREGAS,
     ENTREGAS_LOADED,
-    SET_ENTREGAS
+    SET_ENTREGAS,
+    SET_CONFIGURACAO_ENTREGA
 } from './actionTypes'
 import firebase from 'react-native-firebase'
 
@@ -148,7 +149,13 @@ export const registrar = (novoUsuario) => {
                     nome: novoUsuario.nome,                    
                     email: novoUsuario.email,
                     cidade: novoUsuario.cidade,
-                    uf: novoUsuario.uf
+                    uf: novoUsuario.uf,
+                    configuracaoEntrega: {
+                        rua: '',
+                        complemento: '',
+                        numero: '',
+                        bairro: ''
+                    }
                 }
                 firebase.firestore().collection('usuarios').doc(`${res.user.uid}`).set(novoUsuarioDados)
                     .then(() => {
@@ -503,6 +510,27 @@ export const fetchEntregas = (userKey) => {
                 })
             }
             dispatch(setEntregas(entregas))
+            dispatch(entregasLoaded())
+        })
+        .catch((err) => {
+
+        })
+    }
+}
+
+export const setConfiguracaoEntrega = (configEntrega) => {
+    return {
+        type: SET_CONFIGURACAO_ENTREGA,
+        payload: configEntrega
+    }
+}
+
+export const alteraLocalEntrega = (novoLocal, userKey) => {
+    return dispatch => {
+        dispatch(loadingEntregas())
+        firebase.firestore().collection('usuarios').doc(`${userKey}`).update({ configuracaoEntrega: novoLocal })
+        .then(() => {
+            dispatch(setConfiguracaoEntrega(novoLocal))
             dispatch(entregasLoaded())
         })
         .catch((err) => {

@@ -8,12 +8,28 @@ import { connect } from 'react-redux'
 import Header from '../../components/HeaderComponent'
 import commonStyle from '../../.customization/commonStyles'
 import FooterComponent from '../../components/FooterComponent'
-import { fetchEntregas } from '../../store/actions/user'
+import { fetchEntregas, alteraLocalEntrega } from '../../store/actions/user'
 
 class DetalhesMercado extends Component {
 
     state = {
-        mode: 'configuraEndereco'
+        mode: 'configuraEndereco',
+        localEntrega: {
+            rua: '',
+            complemento: '',
+            numero: '',
+            bairro: ''
+        }
+    }
+
+    alteraEntrega = () => {
+        this.props.onAlteraEntrega(this.state.localEntrega)
+    }
+
+    componentDidUpdate = (prevProps) => {
+        if(prevProps.isLoadingEntregas && !this.props.isLoadingEntregas){
+            this.setState({ localEntrega: { ...this.props.configuracaoEntrega }})
+        }
     }
 
     renderMode = () => {
@@ -89,7 +105,8 @@ const mapStateToProps = ( { user }) => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        onFetchEntregas: (userKey) => dispatch(fetchEntregas(userKey))
+        onFetchEntregas: (userKey) => dispatch(fetchEntregas(userKey)),
+        onAlteraEntrega: (novoLocal, userKey) => dispatch(alteraLocalEntrega(novoLocal, userKey))
     }
 }
 
