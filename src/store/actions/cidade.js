@@ -1,5 +1,26 @@
-import { LOADING_CIDADE, CIDADE_LOADED, SET_MERCADOS_CIDADE, LOADING_CIDADES_UF, CIDADES_UF_LOADED, SET_CIDADES_UF } from './actionTypes'
+import { LOADING_CIDADE, 
+    CIDADE_LOADED, 
+    SET_MERCADOS_CIDADE, 
+    LOADING_CIDADES_UF, 
+    CIDADES_UF_LOADED, 
+    SET_CIDADES_UF, 
+    SET_CIDADE, 
+    SET_UF } from './actionTypes'
 import firebase from 'react-native-firebase'
+
+export const setCidade = (cidade) => {
+    return{
+        type: SET_CIDADE,
+        payload: cidade
+    }
+}
+
+export const setUf = (uf) => {
+    return {
+        type: SET_UF,
+        payload: uf
+    }
+}
 
 export const loadingCidade = () => {
     return{

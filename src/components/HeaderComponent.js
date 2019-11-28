@@ -10,7 +10,7 @@ class HeaderComponent extends Component {
             <Header style={styles.header} iosBarStyle="light-content" androidStatusBarColor="#000000">
                 <Left>
                     <Button transparent onPress={(props) => this.props.navigation.dispatch(DrawerActions.openDrawer())}>
-                        <Icon ios='ios-menu' android="md-menu" style={{fontSize: 33, color: '#003266'}}/>
+                        <Icon ios='ios-menu' android="md-menu" style={{fontSize: 33, color: '#C20114'}}/>
                     </Button>
                 </Left>
                 <Body></Body>

@@ -1,7 +1,8 @@
 //PADRÃO
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
-import { Container, Content, Text } from 'native-base'
+import { Container, Content, Text, Spinner } from 'native-base'
+import { connect } from 'react-redux'
 //Components e utilitários internos
 import Header from '../../../components/HeaderComponent'
 import commonStyle from '../../../customization/commonStyles'
@@ -27,4 +28,18 @@ const styles = StyleSheet.create({
     container: commonStyle.container
 })
 
-export default ListaMercados
+const mapStateToProps = ( { cidade }) => {
+    return {        
+        listaMercados: cidade.listaMercados,
+        isLoadingCidade: cidade.isLoadingCidade
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return{
+        onPesquisaCidadesUf: (uf) => dispatch(fetchCidadesUf(uf)),
+        onSelecionaCidade: (cidade) => dispatch(fetchMercadosCidade(cidade))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListaMercados)

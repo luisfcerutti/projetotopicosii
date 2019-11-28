@@ -18,9 +18,9 @@ export default props => {
                     <TouchableOpacity onPress={desconectar} style={{marginTop: 8, marginBottom: 8, alignItems: 'center', backgroundColor: '#CCD6E2', padding: 15}}>
                         <Text
                             style={{fontSize: 23,
-                            fontFamily: 'Jura Bold',
+                            fontFamily: 'Montserrat Bold',
                             fontWeight: 'normal',
-                            color: '#003266'}}>
+                            color: '#C20114'}}>
                             Sair
                         </Text>
                     </TouchableOpacity>                   

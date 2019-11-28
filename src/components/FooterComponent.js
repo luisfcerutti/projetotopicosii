@@ -10,7 +10,7 @@ class FooterComponent extends Component {
             <Footer style={styles.footer}>
                 <FooterTab style={styles.footerTab}>
                     <Text>iMarket {" "}                    
-                    <Icon name="copyright" size={14} color="#003266"/></Text>
+                    <Icon name="copyright" size={14} color="#C20114"/></Text>
                 </FooterTab>
             </Footer>
         )
