@@ -1,7 +1,7 @@
 //PADRÃO
 import React, { Component } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { Container, Content, Text, Spinner } from 'native-base'
+import { StyleSheet, View, FlatList } from 'react-native'
+import { Container, Content, Text, Spinner, Button, Item, Icon, Input, Card, CardItem, Body } from 'native-base'
 import { Row, Grid, Col } from 'react-native-easy-grid'
 import { connect } from 'react-redux'
 //Components e utilitários internos
@@ -32,19 +32,114 @@ class ConfiguracoesEntrega extends Component {
         }
     }
 
+    renderEncomendas = () => {
+        if(this.props.entregas.length>0){
+            return(
+                <View>
+                    <FlatList
+                            data={this.props.entregas}
+                            keyExtractor={(item, index) => `${index}`}
+                            renderItem={({ item, index }) => (
+                                    <Row style={{ minHeight: 80, marginTop: 10 }}>
+                                        <Card>
+                                            <CardItem header>
+                                                <Text>{item.data}</Text>
+                                            </CardItem>
+                                            <CardItem>
+                                                <Body>
+                                                    <Text>
+                                                    {item.mercado}
+                                                    </Text>
+                                                </Body>
+                                            </CardItem>
+                                            <CardItem footer>
+                                                <Text>{item.valor}</Text>
+                                            </CardItem>
+                                        </Card>
+                                    </Row>
+                            )}
+                        />
+                </View>
+            )
+        }else{
+            return(
+                <View>
+                    <Text>Você ainda não solicitou nenhuma entrega.</Text>
+                </View>
+            )
+        }
+    }
+
     renderMode = () => {
         switch(this.state.mode){
             case 'configuraEndereco': {
                 return(
                     <View>
-
+                        <Row>
+                            <Col>
+                                <Text>                                
+                                    Endereço de Entrega
+                                </Text>
+                            </Col>
+                            <Col>
+                                <Button onPress={() => this.setState({mode: 'minhasEncomendas'})}>
+                                    <Text>Minhas Encomendas</Text>
+                                </Button>
+                            </Col>
+                        </Row>                        
+                        <Row>
+                            <Item style={{width: '100%'}}>
+                                <Icon name="md-at"/>
+                                <Input 
+                                placeholder={this.state.localEntrega.rua.length>0 ? this.state.localEntrega.rua : 'Rua'} 
+                                onChangeText={(text) => this.setState({localEntrega: { ...this.state.localEntrega, rua: text}})}/>
+                            </Item>
+                        </Row>
+                        <Row>
+                            <Item style={{width: '100%'}}>
+                                <Icon name="md-key"/>
+                                <Input placeholder={this.state.localEntrega.numero.length>0 ? this.state.localEntrega.numero : 'Número'} 
+                                onChangeText={(text) => this.setState({localEntrega: { ...this.state.localEntrega, numero: text}})}/>
+                            </Item>
+                        </Row>
+                        <Row>
+                            <Item style={{width: '100%'}}>
+                                <Icon name="md-key"/>
+                                <Input placeholder={this.state.localEntrega.complemento.length>0 ? this.state.localEntrega.complemento : 'Complemento'} 
+                                onChangeText={(text) => this.setState({localEntrega: { ...this.state.localEntrega, complemento: text}})}/>
+                            </Item>
+                        </Row>
+                        <Row>
+                            <Item style={{width: '100%'}}>
+                                <Icon name="md-key"/>
+                                <Input placeholder={this.state.localEntrega.bairro.length>0 ? this.state.localEntrega.bairro : 'Bairro'} 
+                                onChangeText={(text) => this.setState({localEntrega: { ...this.state.localEntrega, bairro: text}})}/>
+                            </Item>
+                        </Row>
+                        <Row>
+                            <Button onPress={() => this.alteraEntrega()}>
+                                <Text>Alterar</Text>
+                            </Button>
+                        </Row>
                     </View>
                 )
             }
             case 'minhasEncomendas': {
                 return (
                     <View>
-
+                        <Row>
+                            <Col>
+                                <Text>                                
+                                    Minhas Encomendas
+                                </Text>
+                            </Col>
+                            <Col>
+                                <Button onPress={() => this.setState({mode: 'configuraEndereco'})}>
+                                    <Text>Endereço de Entrega</Text>
+                                </Button>
+                            </Col>
+                        </Row>
+                        {this.renderEncomendas()}
                     </View>
                 )
             }
@@ -68,7 +163,9 @@ class ConfiguracoesEntrega extends Component {
         }else{
             return(
                 <View>
-                    {this.renderMode()}
+                    <Grid>
+                        {this.renderMode()}
+                    </Grid>
                 </View>
             )
         }
