@@ -6,6 +6,8 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import Home from './screens/main/Home'
 import Login from './screens/main/Login'
 import MinhaConta from './screens/main/MinhaConta'
+import ConfiguracoesPagamento from './screens/main/ConfiguracoesPagamento'
+import ConfiguracoesEntrega from './screens/main/ConfiguracoesEntrega'
 //Child Screens
 import ListaMercados from './screens/child/Home/ListaMercados'
 import DetalhesMercado from './screens/child/Mercado/DetalhesMercado'
@@ -14,7 +16,6 @@ import ListaProdutosMercado from './screens/child/Mercado/ListaProdutosMercado'
 import FinalizaCompra from './screens/child/Mercado/FinalizaCompra'
 //Component
 import Menu from './components/Menu'
-import ConfiguracoesPagamento from './screens/main/ConfiguracoesPagamento'
 
 //Navigator Pages
 
@@ -73,6 +74,16 @@ const MenuRoutes = {
         screen: ConfiguracoesPagamento,
         navigationOptions: {
             title: 'Configuração Pagamento',
+            drawerIcon: () => (
+                <Icon name="cogs" size={20} color={'#003266'} />
+            )          
+        }
+    },
+    ConfiguracoesEntrega: {
+        name:'ConfiguracoesEntrega',
+        screen: ConfiguracoesEntrega,
+        navigationOptions: {
+            title: 'Configuração Entrega',
             drawerIcon: () => (
                 <Icon name="cogs" size={20} color={'#003266'} />
             )          

@@ -10,12 +10,12 @@ import { USER_LOGGED_IN,
     PASSWORD_RESETED,
     PASSWORD_CHANGED,
     DADOS_ALTERADOS,
-    FINALIZANDO_CADASTRO,
-    CADASTRO_FINALIZADO,
-    ERRO_FINALIZACAO_CADASTRO,
     LOADING_METODOS_PAGAMENTO,
     METODOS_PAGAMENTO_LOADED,
-    SET_METODOS_PAGAMENTO
+    SET_METODOS_PAGAMENTO,
+    LOADING_ENTREGAS,
+    ENTREGAS_LOADED,
+    SET_ENTREGAS,
     } from '../actions/actionTypes'
 
 const initialState = {
@@ -45,7 +45,11 @@ const initialState = {
     mensagemAlterandoDados: '',
     // MÉTODOS PAGAMENTO
     metodosPagamento: [],
-    isLoadingMetodos: false    
+    isLoadingMetodos: false,
+    // ENTREGAS
+    isLoadingEntregas: false,
+    minhasEntregas: [],
+    configuracaoEntrega: {}    
     
 }
 
@@ -161,7 +165,25 @@ const reducer = (state=initialState, action) => {
                 ...state,
                 metodosPagamento: action.payload
             }
-        }       
+        }
+        case LOADING_ENTREGAS: {
+            return {
+                ...state,
+                isLoadingEntregas: true
+            }
+        }
+        case ENTREGAS_LOADED: {
+            return {
+                ...state,
+                isLoadingEntregas: false
+            }
+        }
+        case SET_ENTREGAS: {
+            return {
+                ...state,
+                minhasEntregas: action.payload
+            }
+        }      
         default: {
             return state 
         }    

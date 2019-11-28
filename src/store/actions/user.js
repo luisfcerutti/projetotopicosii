@@ -15,7 +15,10 @@ import {
     DADOS_ALTERADOS,    
     LOADING_METODOS_PAGAMENTO,
     METODOS_PAGAMENTO_LOADED,
-    SET_METODOS_PAGAMENTO
+    SET_METODOS_PAGAMENTO,
+    LOADING_ENTREGAS,
+    ENTREGAS_LOADED,
+    SET_ENTREGAS
 } from './actionTypes'
 import firebase from 'react-native-firebase'
 
@@ -100,6 +103,7 @@ export const login = (user) => {
                                 ...user
                             }
                             dispatch(userLogged(userFinal))
+                            dispatch(fetchMetodosPagamento(res.user.uid))
                             dispatch(userAuthenticated())
                         }
                     })
@@ -455,6 +459,51 @@ export const addMetodoPagamento = (userKey, metodo) => {
         firebase.firestore().collection('usuarios').doc(`${userKey}`).collection('metodosPagamento').add(metodo)
         .then(() => {
             dispatch(fetchMetodosPagamento(userKey))
+        })
+        .catch((err) => {
+
+        })
+    }
+}
+
+// ENTREGAS
+
+export const loadingEntregas = () => {
+    return{
+        type: LOADING_ENTREGAS
+    }
+}
+
+export const entregasLoaded = () => {
+    return {
+        type: ENTREGAS_LOADED
+    }
+}
+
+export const setEntregas = (entregas) => {
+    return {
+        type: SET_ENTREGAS,
+        payload: entregas
+    }
+}
+
+export const fetchEntregas = (userKey) => {
+    return dispatch => {
+        dispatch(loadingEntregas())
+        let entregas = []
+        firebase.firestore().collection('usuarios').doc(`${userKey}`).collection('entregas').get()
+        .then((res) => {
+            if(!res.empty){
+                res.forEach((doc) => {
+                    let entrega = {
+                        key: doc.id,
+                        ...doc.data()
+                    }
+                    entregas.push(entrega)
+                })
+            }
+            dispatch(setEntregas(entregas))
+            dispatch(entregasLoaded())
         })
         .catch((err) => {
 

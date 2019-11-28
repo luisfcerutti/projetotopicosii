@@ -1,6 +1,6 @@
 //PADRÃO
 import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { Container, Content, Text, Spinner } from 'native-base'
 import { Row, Grid, Col } from 'react-native-easy-grid'
 import { connect } from 'react-redux'
@@ -11,13 +11,33 @@ import FooterComponent from '../../components/FooterComponent';
 import { addMetodoPagamento, removeMetodoPagamento } from '../../store/actions/user'
 
 class ConfiguracoesPagamento extends Component {
+
+    state = {
+        novoMetodo: {}
+    }
+
+    loadingOuNao = () => {
+        if(this.props.isLoadingMetodos){
+            return(
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Spinner color='#C20114' />
+                </View>
+            )
+        }else{
+            return(
+                <View>
+                    
+                </View>
+            )
+        }
+    }
  
     render(){
         return(
             <Container style={styles.container}>
                 <Header />
                 <Content padder>
-                    <Text>Configurações Pagamento</Text>
+                    {this.loadingOuNao()}
                 </Content>
                 <FooterComponent />
             </Container>

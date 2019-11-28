@@ -24,7 +24,8 @@ class FinalizaCompra extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: commonStyle.container
+    container: commonStyle.container,
+    informacoesText: commonStyle.informacoesText
 })
 
 export default FinalizaCompra

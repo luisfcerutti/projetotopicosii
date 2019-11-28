@@ -1,6 +1,6 @@
 //PADRÃO
 import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { Container, Content, Text, Spinner } from 'native-base'
 import Dialog from "react-native-dialog"
 import { connect } from 'react-redux'

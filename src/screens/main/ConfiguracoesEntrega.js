@@ -5,45 +5,27 @@ import { Container, Content, Text, Spinner } from 'native-base'
 import { Row, Grid, Col } from 'react-native-easy-grid'
 import { connect } from 'react-redux'
 //Components e utilitários internos
-import Header from '../../../components/HeaderComponent'
-import commonStyle from '../../../customization/commonStyles'
-import FooterComponent from '../../../components/FooterComponent';
-import { alteraListaCompras } from '../../../store/actions/mercado'
+import Header from '../../components/HeaderComponent'
+import commonStyle from '../../.customization/commonStyles'
+import FooterComponent from '../../components/FooterComponent'
+import { fetchEntregas } from '../../store/actions/user'
 
 class DetalhesMercado extends Component {
 
     state = {
-        mode: 'listaMercado'
-    }
-
-    addListaCompras = (item) => {
-        let listaTemp = Object.assign([], this.props.listaCompras)
-        listaTemp.push(item)
-        this.props.onAlteraLista(listaTemp)
-    }
-
-    removeListaCompras = (index) => {
-        let listaTemp = Object.assign([], this.props.listaCompras)
-        listaTemp.splice(index, 1)
-        this.props.onAlteraLista(listaTemp)
-    }
-
-    encerraCompra = () => {
-        if(this.props.listaCompras.length>0){
-            this.props.navigation.navigate('DetalhesCompra')
-        }
+        mode: 'configuraEndereco'
     }
 
     renderMode = () => {
         switch(this.state.mode){
-            case 'listaMercado': {
+            case 'configuraEndereco': {
                 return(
                     <View>
 
                     </View>
                 )
             }
-            case 'listaCompras': {
+            case 'minhasEncomendas': {
                 return (
                     <View>
 
@@ -61,7 +43,7 @@ class DetalhesMercado extends Component {
     }
 
     loadingOuNao = () => {
-        if(this.props.isLoading){
+        if(this.props.isLoadingEntregas){
             return(
                 <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                     <Spinner color='#C20114' />
@@ -91,24 +73,24 @@ class DetalhesMercado extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: commonStyle.container
+    container: commonStyle.container,
+    informacoesText: commonStyle.informacoesText
 })
 
 
-const mapStateToProps = ( { mercado }) => {
+const mapStateToProps = ( { user }) => {
     return {        
-        nomeMercado: mercado.nome,
-        classificacao: mercado.classificacao,
-        listaProdutos: mercado.listaProdutos,
-        listaCompras: mercado.listaCompras,
-        isLoading: mercado.isLoading
+        usuarioKey: user.key,
+        configuracaoEntrega: user.configuracaoEntrega,
+        entregas: user.minhasEntregas,
+        isLoadingEntregas: user.isLoadingEntregas
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return{
-        onAlteraLista: (novaLista) => dispatch(alteraListaCompras(novaLista))
+        onFetchEntregas: (userKey) => dispatch(fetchEntregas(userKey))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DetalhesMercado)
+export default connect(mapStateToProps, mapDispatchToProps)(ConfiguracoesEntrega)
