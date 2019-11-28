@@ -17,6 +17,7 @@ import { USER_LOGGED_IN,
     ENTREGAS_LOADED,
     SET_ENTREGAS,
     SET_CONFIGURACAO_ENTREGA,
+    SET_CARTAO_CADASTRADO,
     } from '../actions/actionTypes'
 
 const initialState = {
@@ -27,6 +28,8 @@ const initialState = {
     nome: '',
     cidade: '',
     uf: '',
+    localEntregaCadastrado: false,
+    cartaoCadastrado: false,
     // LOGIN E ALTERAÇÃO DE DADOS
     ////////////
     isAuthenticating: false,
@@ -184,10 +187,17 @@ const reducer = (state=initialState, action) => {
                 minhasEntregas: action.payload
             }
         }
+        case SET_CARTAO_CADASTRADO: {
+            return {
+                ...state,
+                cartaoCadastrado: true
+            }
+        }
         case SET_CONFIGURACAO_ENTREGA: {
             return {
                 ...state,
-                configuracaoEntrega: action.payload
+                configuracaoEntrega: action.payload,
+                localEntregaCadastrado: true
             }
         }      
         default: {

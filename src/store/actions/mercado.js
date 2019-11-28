@@ -73,6 +73,7 @@ export const fetchProdutosMercado = (mercadoId) => {
                     }
                 })
                 dispatch(setProdutosMercado(produtosMercado))
+                dispatch(mercadoLoaded())
             }
         })
     }
@@ -83,7 +84,7 @@ export const fetchDadosMercado = (mercadoId) => {
         dispatch(loadingMercado())
         firebase.firestore().collection('mercados').doc(`${mercadoId}`).get()
         .then((res) => {
-            if(res.exists()){
+            if(res.exists){
                 let mercado = res.data()
                 dispatch(setMercado(mercado))
                 dispatch(mercadoLoaded())
@@ -91,7 +92,7 @@ export const fetchDadosMercado = (mercadoId) => {
             }
         })
         .catch((err) => {
-
+            alert(err)
         })
     }
 }

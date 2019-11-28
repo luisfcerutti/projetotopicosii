@@ -19,7 +19,8 @@ import {
     LOADING_ENTREGAS,
     ENTREGAS_LOADED,
     SET_ENTREGAS,
-    SET_CONFIGURACAO_ENTREGA
+    SET_CONFIGURACAO_ENTREGA,
+    SET_CARTAO_CADASTRADO
 } from './actionTypes'
 import firebase from 'react-native-firebase'
 
@@ -153,7 +154,9 @@ export const registrar = (novoUsuario) => {
                         complemento: '',
                         numero: '',
                         bairro: ''
-                    }
+                    },
+                    localEntregaCadastrado: false,
+                    cartaoCadastrado: false
                 }
                 firebase.firestore().collection('usuarios').doc(`${res.user.uid}`).set(novoUsuarioDados)
                     .then(() => {
@@ -458,12 +461,25 @@ export const removeMetodoPagamento = (userKey, metodoKey) => {
     }
 }
 
+export const setCartaoCadastrado = () => {
+    return{
+        type: SET_CARTAO_CADASTRADO
+    }
+}
+
 export const addMetodoPagamento = (userKey, metodo) => {
     return dispatch => {
         dispatch(loadingMetodosPagamento())
         firebase.firestore().collection('usuarios').doc(`${userKey}`).collection('metodosPagamento').add(metodo)
         .then(() => {
             dispatch(fetchMetodosPagamento(userKey))
+            firebase.firestore().collection('usuarios').doc(`${userKey}`).update({ cartaoCadastrado: true })
+            .then(() => {
+                dispatch(setCartaoCadastrado())
+            })
+            .catch((err) => {
+
+            })
         })
         .catch((err) => {
 
@@ -509,6 +525,13 @@ export const fetchEntregas = (userKey) => {
             }
             dispatch(setEntregas(entregas))
             dispatch(entregasLoaded())
+            firebase.firestore().collection('usuarios').doc(`${userKey}`).update({ localEntregaCadastrado: true })
+            .then(() => {
+
+            })
+            .catch((err) => {
+
+            })
         })
         .catch((err) => {
 
