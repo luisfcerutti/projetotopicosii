@@ -1,6 +1,6 @@
 //PADRÃO
 import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { Container, Content, Text, Spinner } from 'native-base'
 import { Dropdown } from 'react-native-material-dropdown';
 import { connect } from 'react-redux'
@@ -121,7 +121,7 @@ class Home extends Component {
                     <Dialog.Description style={{...styles.informacoesText, fontSize: 18, textAlign: 'justify'}}>
                         {this.state.mensagemDialog}
                     </Dialog.Description>                    
-                    <Dialog.Button color={'#C20114'} bold={true} label="OK" onPress={this.handleFechaDialog()} />
+                    <Dialog.Button color={'#C20114'} bold={true} label="OK" onPress={() => this.setState({dialog: false})} />
                 </Dialog.Container>
                 <Content padder>
                         <Dropdown

@@ -27,7 +27,6 @@ const initialState = {
     nome: '',
     cidade: '',
     uf: '',
-    dataNascimento: '',
     // LOGIN E ALTERAÇÃO DE DADOS
     ////////////
     isAuthenticating: false,

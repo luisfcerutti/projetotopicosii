@@ -6,11 +6,11 @@ import { Row, Grid, Col } from 'react-native-easy-grid'
 import { connect } from 'react-redux'
 //Components e utilitários internos
 import Header from '../../components/HeaderComponent'
-import commonStyle from '../../.customization/commonStyles'
+import commonStyle from '../../customization/commonStyles'
 import FooterComponent from '../../components/FooterComponent'
 import { fetchEntregas, alteraLocalEntrega } from '../../store/actions/user'
 
-class DetalhesMercado extends Component {
+class ConfiguracoesEntrega extends Component {
 
     state = {
         mode: 'configuraEndereco',

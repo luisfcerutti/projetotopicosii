@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { StyleSheet } from 'react-native'
-import { Header, Left, Body, Right, Icon, Button } from 'native-base'
+import { Header, Left, Body, Right, Icon, Button, Text } from 'native-base'
 //import Icon from 'react-native-vector-icons/FontAwesome5'
 import { withNavigation, DrawerActions } from 'react-navigation'
 

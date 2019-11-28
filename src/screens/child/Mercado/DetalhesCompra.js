@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
 import { Container, Content, Text } from 'native-base'
+import { connect } from 'react-redux'
 //Components e utilitários internos
 import Header from '../../../components/HeaderComponent'
 import commonStyle from '../../../customization/commonStyles'

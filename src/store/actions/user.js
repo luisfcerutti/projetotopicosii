@@ -93,7 +93,7 @@ export const deslogar = () => {
 export const login = (user) => {
     return dispatch => {
         dispatch(isAuthenticating())
-        firebase.auth().signInWithEmailAndPassword(user.email, user.senha)
+        firebase.auth().signInWithEmailAndPassword(user.email, user.password)
             .then((res) => {
                 firebase.firestore().collection('usuarios').doc(`${res.user.uid}`).get()
                     .then((res2) => {
@@ -143,13 +143,11 @@ export const login = (user) => {
 export const registrar = (novoUsuario) => {
     return dispatch => {
         dispatch(isAuthenticating())
-        firebase.auth().createUserWithEmailAndPassword(novoUsuario.email, novoUsuario.senha)
+        firebase.auth().createUserWithEmailAndPassword(novoUsuario.email, novoUsuario.password)
             .then((res) => {
                 let novoUsuarioDados = {
                     nome: novoUsuario.nome,                    
                     email: novoUsuario.email,
-                    cidade: novoUsuario.cidade,
-                    uf: novoUsuario.uf,
                     configuracaoEntrega: {
                         rua: '',
                         complemento: '',
@@ -181,7 +179,7 @@ export const registrar = (novoUsuario) => {
                         break
                     }
                     default: {
-                        dispatch(errorAuthentication({ titulo: 'Erro!', mensagem: 'Ocorreu um erro ao tentar realizar seu cadastro! Tente novamente!' }));
+                        dispatch(errorAuthentication({ titulo: 'Erro!', mensagem: 'Ocorreu um erro ao tentar realizar seu cadastro! Tente novamente!'+err }));
                         break
                     }
                 }

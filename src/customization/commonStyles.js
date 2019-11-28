@@ -2,16 +2,16 @@ export default {
     
     //DEFINIÇÕES GERAIS
     container: {
-        backgroundColor: '#C7D6D5'
+        backgroundColor: '#FAF9F9'
     },
     
     //FOOTER
     footer: {
-        backgroundColor: '#C7D6D5', 
+        backgroundColor: '#FAF9F9', 
         elevation: 2
     },
     footerTab: {
-        backgroundColor: '#C7D6D5', 
+        backgroundColor: '#FAF9F9', 
         alignItems: 'center', 
         justifyContent: 'center', 
         elevation: 2
@@ -35,7 +35,7 @@ export default {
         fontFamily: 'Montserrat Regular',
         fontSize: 14,
         textAlign: 'center',
-        color: '#C7D6D5'
+        color: '#FAF9F9'
     }
 
     

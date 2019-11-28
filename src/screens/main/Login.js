@@ -1,7 +1,8 @@
 //PADRÃO
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Container, Content, Text, Spinner } from 'native-base'
+import { Container, Content, Text, Spinner, Card, Button, Input, Item, Icon } from 'native-base'
+import { Row, Grid, Col } from 'react-native-easy-grid'
 import Dialog from "react-native-dialog"
 import { connect } from 'react-redux'
 //Components e utilitários internos
@@ -34,7 +35,7 @@ class Login extends Component {
     componentDidMount(){
         this.props.onDeslogar()
     }
-
+    
     login = () => {
         if(this.state.user.email.trim().length>5 && this.state.user.password.trim().length>6){
             this.props.onLogin(this.state.user)
@@ -72,29 +73,30 @@ class Login extends Component {
     }
 
     handleFechaDialog = () => {
-        this.setState({dialog: false})
-        if(this.state.mode==='Login'){
+        
+        if(this.state.dialog===true && this.state.mode==='Login'){
             this.setState({
+                dialog: false,
                 user: { 
                     email: '', 
                     password: '' 
                 }            
             })
         }
-        if(this.state.mode==='Registro'){
+        if(this.state.dialog===true && this.state.mode==='Registro'){
             this.setState({
+                dialog: false,
                 newUser: {
                     email: '',
                     password: '',
                     rptPassword: '',
-                    cidade: '',
-                    uf: '',
                     nome: ''
                 }
             })
         }
-        if(this.state.mode==='EsqueciSenha'){
+        if(this.state.dialog===true && this.state.mode==='EsqueciSenha'){
             this.setState({
+                dialog: false,
                 emailEsqueciSenha: ''
             })
         }
@@ -105,21 +107,107 @@ class Login extends Component {
             case 'Login': {
                 return(
                     <View>
-                        <Text>Login</Text>
+                        <Grid>
+                            <Row>
+                                <Text>Login</Text>
+                            </Row>
+                            <Row>
+                                <Item style={{width: '100%'}}>
+                                    <Icon name="md-at"/>
+                                    <Input placeholder="Email" onChangeText={(text) => this.setState({user: {...this.state.user, email: text}})}/>
+                                </Item>
+                            </Row>
+                            <Row>
+                                <Item style={{width: '100%'}}>
+                                    <Icon name="md-key"/>
+                                    <Input 
+                                    placeholder="Senha" 
+                                    secureTextEntry={true}
+                                    onChangeText={(text) => this.setState({user: {...this.state.user, password: text}})}/>
+                                </Item>
+                            </Row>
+                            <Row>
+                                <Button transparent onPress={() => this.setState({mode: 'EsqueciSenha'})}>
+                                    <Text>Esqueci minha senha</Text>
+                                </Button>
+                            </Row>
+                            <Row>
+                                <Button onPress={() => this.login()}>
+                                    <Text>Acessar</Text>
+                                </Button>
+                            </Row>
+                        </Grid>
                     </View>
                 )
             }
             case 'Registro': {
                 return (
                     <View>
-                        <Text>Registro</Text>
+                        <Grid>
+                            <Row>
+                                <Text>Criar Conta</Text>
+                            </Row>
+                            <Row>
+                                <Item style={{width: '100%'}}>
+                                    <Icon name="md-person"/>
+                                    <Input placeholder="Nome" onChangeText={(text) => this.setState({newUser: {...this.state.newUser, nome: text}})}/>
+                                </Item>
+                            </Row>
+                            <Row>
+                                <Item style={{width: '100%'}}>
+                                    <Icon name="md-at"/>
+                                    <Input placeholder="Email" onChangeText={(text) => this.setState({newUser: {...this.state.newUser, email: text}})}/>
+                                </Item>
+                            </Row>
+                            <Row>
+                                <Item style={{width: '100%'}}>
+                                    <Icon name="md-key"/>
+                                    <Input placeholder="Senha" 
+                                    secureTextEntry={true}
+                                    onChangeText={(text) => this.setState({newUser: {...this.state.newUser, password: text}})}/>
+                                </Item>
+                            </Row>
+                            <Row>
+                                <Item style={{width: '100%'}}>
+                                    <Icon name="md-key"/>
+                                    <Input placeholder="Repita a Senha"
+                                    secureTextEntry={true} 
+                                    onChangeText={(text) => this.setState({newUser: {...this.state.newUser, rptPassword: text}})}/>
+                                </Item>
+                            </Row>
+                            <Row>
+                                <Button onPress={() => this.registrar()}>
+                                    <Text>Criar Conta</Text>
+                                </Button>
+                            </Row>
+                        </Grid>
                     </View>
                 )
             }
             case 'EsqueciSenha': {
                 return(
                     <View>
-                        <Text>Esqueci senha</Text>
+                        <Grid>
+                            <Row>
+                                <Text>Esqueci a Senha</Text>
+                            </Row>                           
+                            <Row>
+                                <Item style={{width: '100%'}}>
+                                    <Icon name="md-at"/>
+                                    <Input placeholder="Email" onChangeText={(text) => this.setState({emailEsqueciSenha: text})}/>
+                                </Item>
+                            </Row>                            
+                            <Row>
+                                <Button onPress={() => this.esqueciMinhaSenha()}>
+                                    <Text>Enviar</Text>
+                                </Button>
+                            </Row>
+                            <Row>
+                                <Button onPress={() => this.setState({mode: 'Login'})}>
+                                    <Text>Voltar</Text>
+                                </Button>
+                            </Row>
+                        </Grid>
                     </View>
                 )
             }
@@ -129,6 +217,14 @@ class Login extends Component {
 
                     </View>
                 )
+            }
+        }
+    }
+
+    componentDidUpdate = prevProps => {
+        if(prevProps.isAuthenticating && !this.props.isAuthenticating){
+            if(!prevProps.isAuthenticated && this.props.isAuthenticated){                
+                    this.props.navigation.navigate('Acesso')                           
             }
         }
     }
@@ -143,8 +239,21 @@ class Login extends Component {
         }else{
             return(
                 <Content padder>
-                    <Text>Login</Text>
                     {this.renderMode()}
+                    <Grid style={{marginTop: 20}}>
+                        <Row>
+                            <Col>
+                                <Button onPress={() => this.setState({mode: 'Login'})}>
+                                    <Text>Login</Text>
+                                </Button>
+                            </Col>
+                            <Col>
+                                <Button onPress={() => this.setState({mode: 'Registro'})}>
+                                    <Text>Registrar</Text>
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Grid>
                 </Content>
             )
         }
@@ -174,7 +283,7 @@ class Login extends Component {
                     <Dialog.Description style={{...styles.informacoesText, fontSize: 18, textAlign: 'justify'}}>
                         {this.state.mensagemDialog}
                     </Dialog.Description>                    
-                    <Dialog.Button color={'#C20114'} bold={true} label="OK" onPress={this.handleFechaDialog()} />
+                    <Dialog.Button color={'#C20114'} bold={true} label="OK" onPress={() => this.handleFechaDialog()} />
                 </Dialog.Container>
                     {this.loadingOuRender()}
                 </Container>
