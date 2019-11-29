@@ -67,12 +67,12 @@ class Home extends Component {
                 if(this.props.cidadesList.length>0){
                     return(
                         <View>
-                            <Row>
-                                <Text>
+                            <Row style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+                                <Text style={styles.informacoesText}>
                                     Selecione a cidade:
                                 </Text>
                             </Row>
-                            <Row>
+                            <Row style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
                                 <Dropdown
                                     containerStyle={{
                                         height: 40,
@@ -93,18 +93,23 @@ class Home extends Component {
                                     lineWidth={0}
                                 />
                             </Row>
-                            <Row style={{marginTop: 10}}>
-                                <Button onPress={() => this.pesquisaMercadosCidade()}>
-                                    <Text>Pesquisar Mercados</Text>
-                                </Button>
+                            <Row style={{marginTop: 20}}>
+                                <Col size={2}>
+
+                                </Col>
+                                <Col size={2}>                                
+                                    <Button style={styles.button} onPress={() => this.pesquisaMercadosCidade()}>
+                                        <Text style={styles.buttonText}>Pesquisar</Text>
+                                    </Button>
+                                </Col>
                             </Row>
                         </View>
                     )
                 }else{
                     return(
                         <View>
-                            <Row>                            
-                                <Text>Não há nenhuma cidade cadastrada nesse estado!</Text>
+                            <Row style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>                            
+                                <Text style={styles.informacoesText}>Não há nenhuma cidade cadastrada nesse estado!</Text>
                             </Row>
                         </View>
                     )
@@ -112,8 +117,8 @@ class Home extends Component {
             }else{
                 return(
                     <View>
-                        <Row>
-                            <Text>Selecione acima o estado que deseja buscar.</Text>
+                        <Row style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+                            <Text style={styles.informacoesText}>Selecione acima o estado que deseja buscar.</Text>
                         </Row>
                     </View>
                 )
@@ -138,10 +143,13 @@ class Home extends Component {
                 </Dialog.Container>
                 <Content padder>
                     <Grid>
-                        <Row>
-                            <Text>Selecione o estado</Text>
+                        <Row style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+                            <Text style={styles.titulo}>Busca por cidade</Text>
                         </Row>
-                        <Row>
+                        <Row style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+                            <Text style={styles.informacoesText}>Selecione o estado</Text>
+                        </Row>
+                        <Row style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
                             <Dropdown
                                     containerStyle={{
                                         height: 40,
@@ -174,7 +182,11 @@ class Home extends Component {
 
 const styles = StyleSheet.create({
     container: commonStyle.container,
-    informacoesText: commonStyle.informacoesText
+    informacoesText: commonStyle.informacoesText,
+    buttonTextGrande: commonStyle.buttonTextGrande,
+    button: commonStyle.button,
+    titulo: commonStyle.tituloText,
+    buttonText: commonStyle.buttonTextNormal
 })
 
 const mapStateToProps = ( { cidade }) => {

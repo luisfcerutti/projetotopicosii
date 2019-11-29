@@ -14,8 +14,8 @@ class HeaderComponent extends Component {
                     </Button>
                 </Left>
                 <Body></Body>
-                <Right>
-                    <Text>iMarket</Text>
+                <Right style={{marginRight: 10}}>
+                    <Text style={{fontFamily: 'Montserrat Bold', fontWeight: 'normal', fontSize: 16, color: '#C20114'}}>iMarket</Text>
                 </Right>              
             </Header>
         )
@@ -25,7 +25,7 @@ class HeaderComponent extends Component {
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: '#fdfdff', 
+        backgroundColor: '#FAF9F9', 
         height: 63
     }
 })

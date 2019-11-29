@@ -55,7 +55,7 @@ const MenuRoutes = {
         navigationOptions: {
             title: 'Início',
             drawerIcon: () => (
-                <Icon name="home" size={20} color={'#003266'} />
+                <Icon name="home" size={20} color={'#C20114'} />
             )          
         }
     },
@@ -65,7 +65,7 @@ const MenuRoutes = {
         navigationOptions: {
             title: 'Minha Conta',
             drawerIcon: () => (
-                <Icon name="cogs" size={20} color={'#003266'} />
+                <Icon name="cogs" size={20} color={'#C20114'} />
             )          
         }
     },
@@ -73,9 +73,9 @@ const MenuRoutes = {
         name:'ConfiguracoesPagamento',
         screen: ConfiguracoesPagamento,
         navigationOptions: {
-            title: 'Configuração Pagamento',
+            title: 'Pagamentos',
             drawerIcon: () => (
-                <Icon name="cogs" size={20} color={'#003266'} />
+                <Icon name="dollar-sign" size={20} color={'#C20114'} />
             )          
         }
     },
@@ -83,9 +83,9 @@ const MenuRoutes = {
         name:'ConfiguracoesEntrega',
         screen: ConfiguracoesEntrega,
         navigationOptions: {
-            title: 'Configuração Entrega',
+            title: 'Entregas',
             drawerIcon: () => (
-                <Icon name="cogs" size={20} color={'#003266'} />
+                <Icon name="truck" size={20} color={'#C20114'} />
             )          
         }
     }
@@ -97,15 +97,15 @@ const MenuConfig = {
     contentOptions:{
         labelStyle:{
             fontSize: 21,
-            fontFamily: 'Jura Bold',
+            fontFamily: 'Montserrat Regular',
             fontWeight: 'normal',
-            color: '#003266'
+            color: '#840808'
         },
         activeLabelStyle:{
-            color:'#003266',
+            color:'#840808',
             fontSize: 22
         },
-        activeBackgroundColor: '#DFE2E5'
+        activeBackgroundColor: '#E9B2B2'
     }
 }
 
