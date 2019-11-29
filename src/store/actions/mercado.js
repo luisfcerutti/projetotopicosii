@@ -4,7 +4,9 @@ import { ALTERA_LISTA_COMPRAS,
     LOADING_MERCADO,
     MERCADO_LOADED,
     SET_MERCADO,
-    SET_PRODUTOS_MERCADO
+    SET_PRODUTOS_MERCADO,
+    SET_TOTAL_COMPRA,
+    LIMPA_LISTA
 } from './actionTypes'
 import firebase from 'react-native-firebase'
 
@@ -97,16 +99,31 @@ export const fetchDadosMercado = (mercadoId) => {
     }
 }
 
-export const finalizaCompra = (userKey, listaCompras, valorCompra, nomeMercado) => {
+export const setTotalCompra = (total) => {
+    return {
+        type: SET_TOTAL_COMPRA,
+        payload: total
+    }
+}
+
+export const limpaLista = () => {
+    return {
+        type: LIMPA_LISTA
+    }
+}
+
+export const finalizaCompra = (userKey, listaCompras, valorCompra, nomeMercado, keyPgto) => {
     return dispatch => {
         dispatch(finalizandoCompra())
         let compraRealizada = {
             valor: valorCompra,
             data: new Date(),
             mercado: nomeMercado,
-            produtos: listaCompras
+            produtos: listaCompras,
+            status: false,
+            keyFormaPagamento: keyPgto
         }
-        firebase.firestore().collection('usuarios').doc(`${userKey}`).collection('comprasRealizadas').add(compraRealizada)
+        firebase.firestore().collection('usuarios').doc(`${userKey}`).collection('entregas').add(compraRealizada)
         .then(() => {
             dispatch(compraFinalizada())
         })

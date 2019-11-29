@@ -5,7 +5,9 @@ import {
     LOADING_MERCADO,
     MERCADO_LOADED,
     FINALIZANDO_COMPRA,
-    COMPRA_FINALIZADA
+    COMPRA_FINALIZADA,
+    SET_TOTAL_COMPRA,
+    LIMPA_LISTA
 } from '../actions/actionTypes'
 
 const initialState = {
@@ -19,6 +21,7 @@ const initialState = {
         produtosLimpeza: []
     },
     listaCompras: [],
+    totalCompra: 0,
     isLoading: false,
     finalizandoCompra: false
 }
@@ -67,6 +70,19 @@ const reducer = (state=initialState, action) => {
                 ...state,
                 finalizandoCompra: false,
                 listaCompras: []
+            }
+        }
+        case SET_TOTAL_COMPRA: {
+            return {
+                ...state,
+                totalCompra: action.payload
+            }
+        }
+        case LIMPA_LISTA: {
+            return {
+                ...state,
+                listaCompras: [],
+                totalCompra: []
             }
         }             
         default: {

@@ -417,10 +417,11 @@ export const metodosPagamentoLoaded = () => {
     }
 }
 
-export const setMetodosPagamento = (metodos) => {
+export const setMetodosPagamento = (metodos, metodos2) => {
     return {
         type: SET_METODOS_PAGAMENTO,
-        payload: metodos
+        payload: metodos,
+        payload2: metodos2
     }
 }
 
@@ -428,6 +429,7 @@ export const fetchMetodosPagamento = (userKey) => {
     return dispatch => {
         dispatch(loadingMetodosPagamento())
         let metodos = []
+        let metodosList = []
         firebase.firestore().collection('usuarios').doc(`${userKey}`).collection('metodosPagamento').get()
         .then((res) => {
             if(!res.empty){
@@ -436,10 +438,15 @@ export const fetchMetodosPagamento = (userKey) => {
                         key: doc.id,
                         ...doc.data()
                     }
+                    let metodo2 = {
+                        label: doc.data().number,
+                        value: doc.id
+                    }
                     metodos.push(metodo)
+                    metodosList.push(metodo2)
                 })
             }
-            dispatch(setMetodosPagamento(metodos))
+            dispatch(setMetodosPagamento(metodos, metodosList))
             dispatch(metodosPagamentoLoaded())
         })
         .catch((err) => {
@@ -549,7 +556,7 @@ export const setConfiguracaoEntrega = (configEntrega) => {
 export const alteraLocalEntrega = (novoLocal, userKey) => {
     return dispatch => {
         dispatch(loadingEntregas())
-        firebase.firestore().collection('usuarios').doc(`${userKey}`).update({ configuracaoEntrega: novoLocal })
+        firebase.firestore().collection('usuarios').doc(`${userKey}`).update({ configuracaoEntrega: novoLocal, localEntregaCadastrado: true })
         .then(() => {
             dispatch(setConfiguracaoEntrega(novoLocal))
             dispatch(entregasLoaded())

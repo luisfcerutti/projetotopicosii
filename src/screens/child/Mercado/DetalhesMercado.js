@@ -10,7 +10,7 @@ import Dialog from "react-native-dialog"
 import Header from '../../../components/HeaderComponent'
 import commonStyle from '../../../customization/commonStyles'
 import FooterComponent from '../../../components/FooterComponent';
-import { alteraListaCompras } from '../../../store/actions/mercado'
+import { alteraListaCompras, setTotalCompra } from '../../../store/actions/mercado'
 
 categorias = [{value: 1, label: 'Alimentos'}, {value: 2, label: 'Frutas'}, {value: 3, label: 'Produtos de Limpeza'}]
 
@@ -22,7 +22,8 @@ class DetalhesMercado extends Component {
         selectedLabel: null,
         dialog: false,
         mensagemDialog: '',
-        tituloDialog: ''
+        tituloDialog: '',
+        totalCompra: 0
     }
 
     onChangeText = (value, index) => {
@@ -31,6 +32,9 @@ class DetalhesMercado extends Component {
 
     addListaCompras = (item) => {
         let listaTemp = Object.assign([], this.props.listaCompras)
+        let total = this.state.totalCompra
+        total = total + item.preco
+        this.setState({totalCompra: total})
         listaTemp.push(item)
         this.props.onAlteraLista(listaTemp)
     }
@@ -44,6 +48,7 @@ class DetalhesMercado extends Component {
     finalizaCompra = () => {
         if(this.props.enderecoCadastrado){
             if(this.props.cartaoCadastrado){
+                this.props.onSetTotal(this.state.totalCompra)
                 this.props.navigation.navigate('DetalhesCompra')
             }else{
                 this.setState({dialog: true, mensagemDialog: 'Você deve cadastrar um método de pagamento antes de continuar!', tituloDialog: 'Atenção!'})
@@ -191,6 +196,9 @@ class DetalhesMercado extends Component {
                                     </Row>
                             )}
                         />
+                        <Row>
+                            <Text>Total: R${" "+this.state.totalCompra}</Text>
+                        </Row>
                         <Row style={{marginTop: 30}}>
                             <Button onPress={() => {this.finalizaCompra()}}>
                                 <Text>Comprar</Text>
@@ -342,7 +350,8 @@ const mapStateToProps = ( { mercado, user }) => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        onAlteraLista: (novaLista) => dispatch(alteraListaCompras(novaLista))
+        onAlteraLista: (novaLista) => dispatch(alteraListaCompras(novaLista)),
+        onSetTotal: (total) => dispatch(setTotalCompra(total))
     }
 }
 

@@ -48,6 +48,7 @@ const initialState = {
     mensagemAlterandoDados: '',
     // MÉTODOS PAGAMENTO
     metodosPagamento: [],
+    metodosList: [],
     isLoadingMetodos: false,
     // ENTREGAS
     isLoadingEntregas: false,
@@ -166,7 +167,8 @@ const reducer = (state=initialState, action) => {
         case SET_METODOS_PAGAMENTO: {
             return{
                 ...state,
-                metodosPagamento: action.payload
+                metodosPagamento: action.payload,
+                metodosList: action.payload2
             }
         }
         case LOADING_ENTREGAS: {
