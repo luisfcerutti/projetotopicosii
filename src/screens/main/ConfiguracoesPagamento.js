@@ -39,21 +39,19 @@ class ConfiguracoesPagamento extends Component {
                     <FlatList
                             data={this.props.metodosPagamento}
                             keyExtractor={(item, index) => `${index}`}
-                            renderItem={({ item, index }) => (
-                                    <Row style={{ minHeight: 80, marginTop: 10 }}>
-                                        <Card style={{width: '80%'}}>
-                                            <CardItem header>
-                                                <Text>{item.type}</Text>
+                            renderItem={({ item, index }) => (                                    
+                                    <Row style={{ minHeight: 80, marginTop: 10, alignItems: 'center', justifyContent: 'center' }}>
+                                        <Card style={{ width: '100%' }}>
+                                            <CardItem header style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                                <Text style={{...styles.informacoesText, fontSize: 16}}>Tipo: Cartão</Text>
                                             </CardItem>
-                                            <CardItem>
-                                                <Body>
-                                                    <Text>
-                                                    {item.number}
-                                                    </Text>
-                                                </Body>
+                                            <CardItem style={{alignItems: 'center', justifyContent: 'center'}}>
+                                                
+                                                    <Text style={styles.titulo}>Número: {" "+item.number}</Text>
+
                                             </CardItem>
-                                            <CardItem footer>
-                                                <Text>{item.expiry}</Text>
+                                            <CardItem footer style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                                <Text style={styles.informacoesText}>Vencimento: {" "+item.expiry}</Text>
                                             </CardItem>
                                         </Card>
                                     </Row>
@@ -64,8 +62,8 @@ class ConfiguracoesPagamento extends Component {
         }else{
             return(
                 <View>
-                    <Row>
-                        <Text>Você ainda não tem nenhum método de pagamento cadastrado</Text>
+                    <Row style={{marginTop: 20, alignItems: 'center', justifyContent: 'center'}}>
+                        <Text style={{...styles.informacoesText, textAlign: 'center'}}>Você ainda não tem nenhum método de pagamento cadastrado</Text>
                     </Row>
                 </View>
             )
@@ -77,36 +75,46 @@ class ConfiguracoesPagamento extends Component {
             case 'listaMetodos':{
                 return(
                     <View>
-                        <Row>
-                            <Text>Meus métodos de pagamento</Text>
+                        <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={styles.tituloGrande}>Meus métodos de pagamento</Text>
+                        </Row>
+                        <Row style={{marginTop: 20}}>
+                            <Col>
+                            </Col>
+                            <Col style={{alignItems: 'center', justifyContent: 'center'}}>
+                                <Button style={styles.button} onPress={() => this.setState({mode: 'adicionaMetodo'})}>
+                                    <Text style={styles.buttonText}>
+                                        Adicionar
+                                    </Text>
+                                </Button>
+                            </Col>
                         </Row>
                         {this.renderMetodos()}
-                        <Row>
-                            <Button onPress={() => this.setState({mode: 'adicionaMetodo'})}>
-                                <Text>
-                                    Adicionar
-                                </Text>
-                            </Button>
-                        </Row>
+                        
                     </View>
                 )
             }
             case 'adicionaMetodo':{
                 return(
                     <View>
-                        <Row>
-                            <Text>
+                        <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={styles.tituloGrande}>
                                 Adicionar novo cartão
                             </Text>
                         </Row>
-                        <Row style={{width: '100%'}}>
+                        <Row style={{width: '100%', marginTop: 30}}>
                             <CreditCardInput onChange={this.onChangeCredit} />
                         </Row>
-                        <Row style={{marginTop: 30}}>
-                            <Button onPress={() => this.adicionaNovoMetodo()}>
-                                <Text>
+                        <Row style={{marginTop: 30, alignItems: 'center', justifyContent: 'center'}}>
+                            <Button style={styles.button} onPress={() => this.adicionaNovoMetodo()}>
+                                <Text style={styles.buttonText}>
                                     Adicionar
                                 </Text>
+                            </Button>
+                        </Row>
+                        <Row style={{marginTop: 30, alignItems: 'center', justifyContent: 'center'}}>
+                            <Button bordered style={{borderColor: '#C20114', alignItems: 'center', justifyContent: 'center', borderRadius: 8}} onPress={() => this.setState({mode: 'listaMetodos'})}>
+                                    <Text style={{...styles.buttonText, color: '#C20114'}}>Cancelar</Text>
                             </Button>
                         </Row>
                     </View>
@@ -130,7 +138,7 @@ class ConfiguracoesPagamento extends Component {
         }else{
             return(
                 <View>
-                    <Grid>
+                    <Grid style={{alignItems: 'center', justifyContent: 'center'}}>
                         {this.renderMode()}
                     </Grid>
                 </View>
@@ -155,7 +163,11 @@ class ConfiguracoesPagamento extends Component {
 const styles = StyleSheet.create({
     container: commonStyle.container,
     informacoesText: commonStyle.informacoesText,
-    titulo: commonStyle.tituloText
+    buttonTextGrande: commonStyle.buttonTextGrande,
+    button: commonStyle.button,
+    titulo: commonStyle.tituloText,
+    tituloGrande: commonStyle.superTituloText,
+    buttonText: commonStyle.buttonTextNormal
 })
 
 
