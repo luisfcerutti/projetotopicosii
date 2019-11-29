@@ -28,15 +28,15 @@ class FinalizaCompra extends Component {
             return(
                 <View>
                     <Grid>
-                        <Row>
-                            <Text>Compra finalizada!</Text>
+                        <Row style={{marginTop: 40, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={styles.tituloGrande}>Compra finalizada!</Text>
                         </Row>
-                        <Row>
-                            <Text>Você agora pode acompanhar o andamento da sua entrega pela aba "Entregas"</Text>
+                        <Row style={{margin: 20, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={{...styles.informacoesText, textAlign: 'center'}}>Você agora pode acompanhar o andamento da sua entrega pela aba "Entregas"</Text>
                         </Row>
-                        <Row>
-                            <Button onPress={() => this.voltar()}>
-                                <Text>Voltar</Text>
+                        <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
+                            <Button style={{...styles.button, width: '60%'}} onPress={() => this.voltar()}>
+                                <Text style={styles.buttonText}>Voltar</Text>
                             </Button>
                         </Row>
                     </Grid>
@@ -61,7 +61,12 @@ class FinalizaCompra extends Component {
 
 const styles = StyleSheet.create({
     container: commonStyle.container,
-    informacoesText: commonStyle.informacoesText
+    informacoesText: commonStyle.informacoesText,
+    buttonTextGrande: commonStyle.buttonTextGrande,
+    button: commonStyle.button,
+    titulo: commonStyle.tituloText,
+    tituloGrande: commonStyle.superTituloText,
+    buttonText: commonStyle.buttonTextNormal
 })
 
 const mapStateToProps = ( { mercado }) => {

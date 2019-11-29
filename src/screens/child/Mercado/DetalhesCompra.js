@@ -27,7 +27,7 @@ class DetalhesCompra extends Component {
     }  
 
     finalizaCompra = () => {
-        if(this.props.selectedLabel!==null){
+        if(this.state.selectedLabel!==null){
             this.props.onFinalizaCompra(this.props.usuarioKey, this.props.listaCompras, this.props.totalCompra, this.props.nomeMercado, this.state.selectedValue)
             this.props.navigation.navigate('FinalizaCompra')
         }else{
@@ -53,19 +53,19 @@ class DetalhesCompra extends Component {
                 </Dialog.Container>
                 <Content padder>
                     <Grid>
-                        <Row>
-                            <Text>Detalhes da Compra</Text>
+                        <Row style={{marginTop: 20, alignItems: 'center', justifyContent: 'center'}}>
+                            <Text style={styles.titulo}>Detalhes da Compra</Text>
                         </Row>
-                        <Row>
-                            <Text>Mercado: {this.props.nomeMercado}</Text>
+                        <Row style={{marginTop: 10}}>
+                            <Text style={styles.informacoesText}>{"  "}Mercado: {this.props.nomeMercado}</Text>
                         </Row>
-                        <Row>
-                            <Text>Valor Total: {"R$ "+this.props.totalCompra}</Text>
+                        <Row style={{marginTop: 10}}>
+                            <Text style={styles.informacoesText}>{"  "}Valor Total: {"R$ "+this.props.totalCompra}</Text>
                         </Row>
-                        <Row>
-                            <Text>Método de Pagamento:</Text>
+                        <Row style={{marginTop: 20, alignItems: 'center', justifyContent: 'center'}}>
+                            <Text style={styles.titulo}>Método de Pagamento:</Text>
                         </Row>
-                        <Row>
+                        <Row style={{marginTop: 20, alignItems: 'center', justifyContent: 'center'}}>
                                 <Dropdown
                                     containerStyle={{
                                         height: 40,
@@ -86,10 +86,15 @@ class DetalhesCompra extends Component {
                                     lineWidth={0}
                                 />
                             </Row>
-                            <Row>
-                                <Button onPress={() => this.finalizaCompra()}>
-                                    <Text>Finalizar</Text>
-                                </Button>
+                            <Row style={{marginTop: 20}}>
+                                <Col size={1}>
+
+                                </Col>
+                                <Col style={{justifyContent: 'center', alignItems: 'center'}}>
+                                    <Button style={styles.button} onPress={() => this.finalizaCompra()}>
+                                        <Text style={styles.buttonText}>Finalizar</Text>
+                                    </Button>
+                                </Col>
                             </Row>
                     </Grid>
                 </Content>
@@ -102,7 +107,11 @@ class DetalhesCompra extends Component {
 
 const styles = StyleSheet.create({
     container: commonStyle.container,
-    informacoesText: commonStyle.informacoesText
+    informacoesText: commonStyle.informacoesText,
+    buttonTextGrande: commonStyle.buttonTextGrande,
+    button: commonStyle.button,
+    titulo: commonStyle.tituloText,
+    buttonText: commonStyle.buttonTextNormal
 })
 
 const mapStateToProps = ( { mercado, user }) => {

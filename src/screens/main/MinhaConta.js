@@ -86,32 +86,32 @@ class MinhaConta extends Component {
             case 'padrao': {
                 return(
                     <View>
-                        <Row>
-                           <Text>Meus Dados</Text>
+                        <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
+                           <Text style={styles.tituloGrande}>Meus Dados</Text>
                        </Row>
-                       <Row>
-                           <Text>
-                               Nome: {this.props.nome}
+                       <Row style={{marginTop: 40}}>
+                           <Text style={styles.informacoesText}>
+                               {"  "}Nome: {this.props.nome}
                            </Text>
                        </Row>
-                       <Row>
-                           <Text>
-                               Email: {this.props.email}
+                       <Row style={{marginTop: 20, marginBottom: 20}}>
+                           <Text style={styles.informacoesText}>
+                               {"  "}Email: {this.props.email}
                            </Text>
                        </Row>
-                       <Row>
-                           <Button onPress={() => this.setState({mode: 'alteraDados'})}>
-                               <Text>Alterar Dados</Text>
+                       <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
+                           <Button style={styles.button} onPress={() => this.setState({mode: 'alteraDados'})}>
+                               <Text style={styles.buttonText}>Alterar Dados</Text>
                            </Button>
                        </Row>
-                       <Row>
-                           <Button onPress={() => this.setState({mode: 'alteraEmail'})}>
-                               <Text>Alterar Email</Text>
+                       <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
+                           <Button style={styles.button} onPress={() => this.setState({mode: 'alteraEmail'})}>
+                               <Text style={styles.buttonText}>Alterar Email</Text>
                            </Button>
                        </Row>
-                       <Row>
-                           <Button onPress={() => this.setState({mode: 'alteraSenha'})}>
-                               <Text>Alterar Senha</Text>
+                       <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
+                           <Button style={styles.button} onPress={() => this.setState({mode: 'alteraSenha'})}>
+                               <Text style={styles.buttonText}>Alterar Senha</Text>
                            </Button>
                        </Row>
                     </View>
@@ -120,34 +120,36 @@ class MinhaConta extends Component {
             case 'alteraEmail': {
                 return(
                     <View>
-                        <Row>
-                            <Text>
+                        <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={styles.tituloGrande}>
                                 Alterar Email
                             </Text>
                         </Row>                        
-                        <Row>
+                        <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
                             <Item style={{width: '100%'}}>
-                                <Icon name="md-at"/>
-                                <Input placeholder="Novo email" onChangeText={(text) => this.setState({novoEmail: text})}/>
+                                <Icon name="md-at" style={{color: '#C20114'}}/>
+                                <Input style={styles.informacoesText} placeholder="Novo email" onChangeText={(text) => this.setState({novoEmail: text})}/>
                             </Item>
                         </Row>
-                        <Row>
+                        <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
                             <Item style={{width: '100%'}}>
-                                <Icon name="md-key"/>
-                                <Input placeholder="Digite sua senha" 
+                                <Icon name="md-key" style={{color: '#C20114'}}/>
+                                <Input style={styles.informacoesText} placeholder="Digite sua senha" 
                                 secureTextEntry={true}
                                 onChangeText={(text) => this.setState({senha: text})}/>
                             </Item>
                         </Row>
-                        <Row>
-                            <Button onPress={() => this.setState({mode: 'padrao'})}>
-                                <Text>Cancelar</Text>
-                            </Button>
-                        </Row>
-                        <Row>
-                            <Button onPress={() => this.mudaEmail()}>
-                                <Text>Alterar</Text>
-                            </Button>
+                        <Row style={{marginTop: 20}}>
+                            <Col style={{justifyContent: 'center', alignItems: 'center'}}>
+                                <Button bordered style={{borderColor: '#C20114', alignItems: 'center', justifyContent: 'center', borderRadius: 8}} onPress={() => this.setState({mode: 'padrao'})}>
+                                    <Text style={{...styles.buttonText, color: '#C20114'}}>Cancelar</Text>
+                                </Button>
+                            </Col>
+                            <Col style={{justifyContent: 'center', alignItems: 'center'}}>
+                                <Button style={styles.button} onPress={() => this.mudaEmail()}>
+                                    <Text style={styles.buttonText}>Alterar</Text>
+                                </Button>
+                            </Col>
                         </Row>
                     </View>
                 )
@@ -155,44 +157,46 @@ class MinhaConta extends Component {
             case 'alteraSenha': {
                 return(
                     <View>
-                        <Row>
-                            <Text>
+                        <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={styles.tituloGrande}>
                                 Alterar Senha
                             </Text>
                         </Row>                        
-                        <Row>
+                        <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
                             <Item style={{width: '100%'}}>
-                                <Icon name="md-key"/>
-                                <Input placeholder="Digite sua senha" 
+                                <Icon name="md-key" style={{color: '#C20114'}}/>
+                                <Input style={styles.informacoesText} placeholder="Digite sua senha" 
                                 secureTextEntry={true}
                                 onChangeText={(text) => this.setState({senha: text})}/>
                             </Item>
                         </Row>
-                        <Row>
+                        <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
                             <Item style={{width: '100%'}}>
-                                <Icon name="md-key"/>
-                                <Input placeholder="Digite a nova senha" 
+                                <Icon name="ios-lock" style={{color: '#C20114'}}/>
+                                <Input style={styles.informacoesText} placeholder="Digite a nova senha" 
                                 secureTextEntry={true}
                                 onChangeText={(text) => this.setState({novaSenha: text})}/>
                             </Item>
                         </Row>
-                        <Row>
+                        <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
                             <Item style={{width: '100%'}}>
-                                <Icon name="md-key"/>
-                                <Input placeholder="Repita a nova senha" 
+                                <Icon name="ios-lock" style={{color: '#C20114'}}/>
+                                <Input style={styles.informacoesText} placeholder="Repita a nova senha" 
                                 secureTextEntry={true}
                                 onChangeText={(text) => this.setState({repitaNovaSenha: text})}/>
                             </Item>
                         </Row>
-                        <Row>
-                            <Button onPress={() => this.setState({mode: 'padrao'})}>
-                                <Text>Cancelar</Text>
-                            </Button>
-                        </Row>
-                        <Row>
-                            <Button onPress={() => this.mudaSenha()}>
-                                <Text>Alterar</Text>
-                            </Button>
+                        <Row style={{marginTop: 20}}>
+                            <Col style={{justifyContent: 'center', alignItems: 'center'}}>
+                                <Button bordered style={{borderColor: '#C20114', alignItems: 'center', justifyContent: 'center', borderRadius: 8}} onPress={() => this.setState({mode: 'padrao'})}>
+                                    <Text style={{...styles.buttonText, color: '#C20114'}}>Cancelar</Text>
+                                </Button>
+                            </Col>
+                            <Col style={{justifyContent: 'center', alignItems: 'center'}}>
+                                <Button style={styles.button} onPress={() => this.mudaSenha()}>
+                                    <Text style={styles.buttonText}>Alterar</Text>
+                                </Button>
+                            </Col>
                         </Row>
                     </View>
                 )
@@ -200,27 +204,29 @@ class MinhaConta extends Component {
             case 'alteraDados': {
                 return(
                     <View>
-                        <Row>
-                            <Text>
+                        <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={styles.tituloGrande}>
                                 Alterar Dados
                             </Text>
                         </Row>                        
-                        <Row>
+                        <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
                             <Item style={{width: '100%'}}>
-                                <Icon name="md-person"/>
-                                <Input placeholder="Digite o novo nome"
+                                <Icon name="md-person" style={{color: '#C20114'}}/>
+                                <Input style={styles.informacoesText} placeholder="Digite o novo nome"
                                 onChangeText={(text) => this.setState({novoNome: text})}/>
                             </Item>
-                        </Row>
-                        <Row>
-                            <Button onPress={() => this.setState({mode: 'padrao'})}>
-                                <Text>Cancelar</Text>
-                            </Button>
-                        </Row>
-                        <Row>
-                            <Button onPress={() => this.mudaNome()}>
-                                <Text>Alterar</Text>
-                            </Button>
+                        </Row >
+                        <Row style={{marginTop: 20}}>
+                            <Col style={{justifyContent: 'center', alignItems: 'center'}}>
+                                <Button bordered style={{borderColor: '#C20114', alignItems: 'center', justifyContent: 'center', borderRadius: 8}} onPress={() => this.setState({mode: 'padrao'})}>
+                                    <Text style={{...styles.buttonText, color: '#C20114'}}>Cancelar</Text>
+                                </Button>
+                            </Col>
+                            <Col style={{justifyContent: 'center', alignItems: 'center'}}>
+                                <Button style={styles.button} onPress={() => this.mudaNome()}>
+                                    <Text style={styles.buttonText}>Alterar</Text>
+                                </Button>
+                            </Col>
                         </Row>
                     </View>
                 )
@@ -245,7 +251,7 @@ class MinhaConta extends Component {
         }else{
             return(
                 <View>
-                    <Grid>
+                    <Grid style={{alignItems: 'center', justifyContent: 'center'}}> 
                        {this.renderMode()}
                     </Grid>
                 </View>
@@ -278,9 +284,15 @@ class MinhaConta extends Component {
     
 }
 
+
 const styles = StyleSheet.create({
     container: commonStyle.container,
-    informacoesText: commonStyle.informacoesText
+    informacoesText: commonStyle.informacoesText,
+    buttonTextGrande: commonStyle.buttonTextGrande,
+    button: commonStyle.button,
+    titulo: commonStyle.tituloText,
+    tituloGrande: commonStyle.superTituloText,
+    buttonText: commonStyle.buttonTextNormal
 })
 
 
