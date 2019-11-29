@@ -1,6 +1,6 @@
 //PADRÃO
 import React, { Component } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, ImageBackground } from 'react-native'
 import { Container, Content, Text, Spinner, Card, Button, Input, Item, Icon } from 'native-base'
 import { Row, Grid, Col } from 'react-native-easy-grid'
 import Dialog from "react-native-dialog"
@@ -107,34 +107,36 @@ class Login extends Component {
             case 'Login': {
                 return(
                     <View>
-                        <Grid>
-                            <Row>
-                                <Text>Login</Text>
+                        <Grid style={{margin: 20}}>
+                            <Row style={{alignItems: 'center', justifyContent: 'center'}}>
+                                <Text style={styles.titulo}>Login</Text>
                             </Row>
-                            <Row>
+                            <Row style={{marginTop: 15}}>
                                 <Item style={{width: '100%'}}>
-                                    <Icon name="md-at"/>
-                                    <Input placeholder="Email" onChangeText={(text) => this.setState({user: {...this.state.user, email: text}})}/>
+                                    <Icon name="md-at" style={{color: '#C20114'}}/>
+                                    <Input placeholder="Email" 
+                                    style={styles.informacoesText} onChangeText={(text) => this.setState({user: {...this.state.user, email: text}})}/>
                                 </Item>
                             </Row>
-                            <Row>
+                            <Row style={{marginTop: 15}}>
                                 <Item style={{width: '100%'}}>
-                                    <Icon name="md-key"/>
+                                    <Icon name="md-key" style={{color: '#C20114'}}/>
                                     <Input 
+                                    style={styles.informacoesText}
                                     placeholder="Senha" 
                                     secureTextEntry={true}
                                     onChangeText={(text) => this.setState({user: {...this.state.user, password: text}})}/>
                                 </Item>
                             </Row>
-                            <Row>
-                                <Button transparent onPress={() => this.setState({mode: 'EsqueciSenha'})}>
-                                    <Text>Esqueci minha senha</Text>
+                            <Row style={{marginTop: 10, alignItems: 'center', justifyContent: 'center'}}>
+                                <Button transparent style={{justifyContent: 'center', alignItems: 'center'}} onPress={() => this.setState({mode: 'EsqueciSenha'})}>
+                                    <Text style={{...styles.buttonText, fontSize: 12, fontFamily: 'Montserrat Regular', color:'#C20114'}}>Esqueci minha senha</Text>
                                 </Button>
                             </Row>
-                            <Row>
-                                <Button onPress={() => this.login()}>
-                                    <Text>Acessar</Text>
-                                </Button>
+                            <Row style={{alignItems: 'center', justifyContent: 'center', marginTop: 10, marginBottom: 10}}>
+                                    <Button style={{...styles.button, width: '60%'}} onPress={() => this.login()}>
+                                        <Text style={styles.buttonText}>Acessar</Text>
+                                    </Button>
                             </Row>
                         </Grid>
                     </View>
@@ -143,42 +145,47 @@ class Login extends Component {
             case 'Registro': {
                 return (
                     <View>
-                        <Grid>
-                            <Row>
-                                <Text>Criar Conta</Text>
+                        <Grid style={{margin: 20}}>
+                            <Row style={{alignItems: 'center', justifyContent: 'center'}}>
+                                <Text style={styles.titulo}>Criar Conta</Text>
                             </Row>
-                            <Row>
+                            <Row style={{marginTop: 15}}>
                                 <Item style={{width: '100%'}}>
-                                    <Icon name="md-person"/>
-                                    <Input placeholder="Nome" onChangeText={(text) => this.setState({newUser: {...this.state.newUser, nome: text}})}/>
+                                    <Icon name="md-person" style={{color: '#C20114'}}/>
+                                    <Input placeholder="Nome"
+                                    style={styles.informacoesText} onChangeText={(text) => this.setState({newUser: {...this.state.newUser, nome: text}})}/>
                                 </Item>
                             </Row>
-                            <Row>
+                            <Row style={{marginTop: 15}}>
                                 <Item style={{width: '100%'}}>
-                                    <Icon name="md-at"/>
-                                    <Input placeholder="Email" onChangeText={(text) => this.setState({newUser: {...this.state.newUser, email: text}})}/>
+                                    <Icon name="md-at" style={{color: '#C20114'}}/>
+                                    <Input placeholder="Email"                                     
+                                    style={styles.informacoesText}
+                                     onChangeText={(text) => this.setState({newUser: {...this.state.newUser, email: text}})}/>
                                 </Item>
                             </Row>
-                            <Row>
+                            <Row style={{marginTop: 15}}>
                                 <Item style={{width: '100%'}}>
-                                    <Icon name="md-key"/>
+                                    <Icon name="md-key" style={{color: '#C20114'}}/>
                                     <Input placeholder="Senha" 
                                     secureTextEntry={true}
+                                    style={styles.informacoesText}
                                     onChangeText={(text) => this.setState({newUser: {...this.state.newUser, password: text}})}/>
                                 </Item>
                             </Row>
-                            <Row>
+                            <Row style={{marginTop: 15}}>
                                 <Item style={{width: '100%'}}>
-                                    <Icon name="md-key"/>
+                                    <Icon name="md-key" style={{color: '#C20114'}}/>
                                     <Input placeholder="Repita a Senha"
                                     secureTextEntry={true} 
+                                    style={styles.informacoesText}
                                     onChangeText={(text) => this.setState({newUser: {...this.state.newUser, rptPassword: text}})}/>
                                 </Item>
                             </Row>
-                            <Row>
-                                <Button onPress={() => this.registrar()}>
-                                    <Text>Criar Conta</Text>
-                                </Button>
+                            <Row style={{alignItems: 'center', justifyContent: 'center', marginTop: 20, marginBottom: 10}}>
+                                    <Button style={{...styles.button, width: '60%'}} onPress={() => this.registrar()}>
+                                        <Text style={styles.buttonText}>Cadastrar</Text>
+                                    </Button>
                             </Row>
                         </Grid>
                     </View>
@@ -187,25 +194,29 @@ class Login extends Component {
             case 'EsqueciSenha': {
                 return(
                     <View>
-                        <Grid>
-                            <Row>
-                                <Text>Esqueci a Senha</Text>
+                        <Grid style={{margin: 20}}>
+                            <Row style={{alignItems: 'center', justifyContent: 'center'}}>
+                                <Text style={styles.titulo}>Esqueci a Senha</Text>
+                            </Row> 
+                            <Row style={{alignItems: 'center', justifyContent: 'center', marginTop: 20, marginBottom: 20}}>
+                                <Text style={{...styles.informacoesText, textAlign: 'justify'}}>{" "}Será enviado um link para o seu email com as instruções para redefinição de senha.</Text>
                             </Row>                           
-                            <Row>
+                            <Row style={{marginTop: 20, marginBottom: 20}}>
                                 <Item style={{width: '100%'}}>
-                                    <Icon name="md-at"/>
-                                    <Input placeholder="Email" onChangeText={(text) => this.setState({emailEsqueciSenha: text})}/>
+                                    <Icon name="md-at" style={{color: '#C20114'}}/>
+                                    <Input placeholder="Email" 
+                                    style={styles.informacoesText} onChangeText={(text) => this.setState({emailEsqueciSenha: text})}/>
                                 </Item>
                             </Row>                            
-                            <Row>
-                                <Button onPress={() => this.esqueciMinhaSenha()}>
-                                    <Text>Enviar</Text>
-                                </Button>
+                            <Row style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+                                    <Button style={{...styles.button, width: '60%'}} onPress={() => this.esqueciMinhaSenha()}>
+                                        <Text style={styles.buttonText}>Enviar</Text>
+                                    </Button>
                             </Row>
-                            <Row>
-                                <Button onPress={() => this.setState({mode: 'Login'})}>
-                                    <Text>Voltar</Text>
-                                </Button>
+                            <Row style={{alignItems: 'center', justifyContent: 'center', marginTop: 20, marginBottom: 10}}>
+                                    <Button bordered style={{width: '60%', borderColor: '#C20114', alignItems: 'center', justifyContent: 'center', borderRadius: 8}} onPress={() => this.setState({mode: 'Login'})}>
+                                        <Text style={{...styles.buttonText, color: '#C20114'}}>Voltar</Text>
+                                    </Button>
                             </Row>
                         </Grid>
                     </View>
@@ -238,22 +249,26 @@ class Login extends Component {
             )
         }else{
             return(
-                <Content padder>
-                    {this.renderMode()}
-                    <Grid style={{marginTop: 20}}>
+                <Content padder>                    
+                    <Grid style={{marginTop: 100}}>
                         <Row>
-                            <Col>
-                                <Button onPress={() => this.setState({mode: 'Login'})}>
-                                    <Text>Login</Text>
+                            <Card style={{alignItems: 'center', justifyContent: 'center', marginTop: 0}}>
+                                {this.renderMode()}
+                            </Card>
+                        </Row>
+                        <Row style={{marginTop: 30}}>
+                            <Col style={{alignItems: 'center', justifyContent: 'center'}}>
+                                <Button style={styles.button} onPress={() => this.setState({mode: 'Login'})}>
+                                    <Text style={styles.buttonTextGrande}>Login</Text>
                                 </Button>
                             </Col>
-                            <Col>
-                                <Button onPress={() => this.setState({mode: 'Registro'})}>
-                                    <Text>Registrar</Text>
+                            <Col style={{alignItems: 'center', justifyContent: 'center'}}>
+                                <Button style={styles.button} onPress={() => this.setState({mode: 'Registro'})}>
+                                    <Text style={styles.buttonTextGrande}>Registrar</Text>
                                 </Button>
                             </Col>
                         </Row>
-                    </Grid>
+                    </Grid>                  
                 </Content>
             )
         }
@@ -285,7 +300,9 @@ class Login extends Component {
                     </Dialog.Description>                    
                     <Dialog.Button color={'#C20114'} bold={true} label="OK" onPress={() => this.handleFechaDialog()} />
                 </Dialog.Container>
-                    {this.loadingOuRender()}
+                    <ImageBackground source={require('../../../assets/images/background.png')} style={{width: '100%', height: '100%'}}>
+                        {this.loadingOuRender()}
+                    </ImageBackground>
                 </Container>
             )
         }
@@ -296,7 +313,11 @@ class Login extends Component {
 
 const styles = StyleSheet.create({
     container: commonStyle.container,
-    informacoesText: commonStyle.informacoesText
+    informacoesText: commonStyle.informacoesText,
+    buttonTextGrande: commonStyle.buttonTextGrande,
+    button: commonStyle.button,
+    titulo: commonStyle.superTituloText,
+    buttonText: commonStyle.buttonTextNormal
 })
 
 const mapStateToProps = ( { user }) => {

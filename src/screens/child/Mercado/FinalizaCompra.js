@@ -1,7 +1,7 @@
 //PADRÃO
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
-import { Container, Content, Text, Button, Spinner } from 'native-base'
+import { Container, Content, Text, Button, Spinner, View } from 'native-base'
 import { Row, Grid, Col } from 'react-native-easy-grid'
 import { connect } from 'react-redux'
 //Components e utilitários internos
@@ -17,11 +17,16 @@ class FinalizaCompra extends Component {
         this.props.onLimpaLista()
     }
  
-    render(){
-        return(
-            <Container style={styles.container}>
-                <Header />
-                <Content padder>
+    loadingOuNao = () => {
+        if(this.props.isFinalizando){
+            return(
+                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Spinner color='#C20114' />
+                </View>
+            )
+        }else{
+            return(
+                <View>
                     <Grid>
                         <Row>
                             <Text>Compra finalizada!</Text>
@@ -35,6 +40,17 @@ class FinalizaCompra extends Component {
                             </Button>
                         </Row>
                     </Grid>
+                </View>
+            )
+        }
+    }
+
+    render(){
+        return(
+            <Container style={styles.container}>
+                <Header />
+                <Content padder>
+                    {this.loadingOuNao()}
                 </Content>
                 <FooterComponent />
             </Container>
@@ -48,10 +64,16 @@ const styles = StyleSheet.create({
     informacoesText: commonStyle.informacoesText
 })
 
+const mapStateToProps = ( { mercado }) => {
+    return {        
+        isFinalizando: mercado.finalizandoCompra
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return{
         onLimpaLista: () => dispatch(limpaLista()), 
     }
 }
 
-export default connect(null, mapDispatchToProps)(FinalizaCompra)
+export default connect(mapStateToProps, mapDispatchToProps)(FinalizaCompra)

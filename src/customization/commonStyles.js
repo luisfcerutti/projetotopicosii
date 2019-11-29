@@ -26,16 +26,36 @@ export default {
         color: '#C20114'
     },
     tituloText: {
-        fontFamily: 'Montserrat Bold',
+        fontFamily: 'Montserrat Semibold',
         fontWeight: 'normal',
         fontSize: 16,
         color: '#C20114'
     },
+    superTituloText: {
+        fontFamily: 'Montserrat Semibold',
+        fontWeight: 'normal',
+        fontSize: 20,
+        color: '#C20114'
+    },
     buttonTextNormal: {
-        fontFamily: 'Montserrat Regular',
+        fontFamily: 'Montserrat Semibold',
         fontSize: 14,
         textAlign: 'center',
         color: '#FAF9F9'
+    },
+    buttonTextGrande: {
+        fontFamily: 'Montserrat Semibold',
+        fontSize: 15,
+        textAlign: 'center',
+        color: '#FAF9F9'
+    },
+    //BOTÃO
+    button: {
+        width: '80%', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        borderRadius: 8, 
+        backgroundColor: '#C20114'
     }
 
     

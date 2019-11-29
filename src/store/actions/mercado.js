@@ -9,6 +9,7 @@ import { ALTERA_LISTA_COMPRAS,
     LIMPA_LISTA
 } from './actionTypes'
 import firebase from 'react-native-firebase'
+import { fetchEntregas } from './user'
 
 export const alteraListaCompras = (novaLista) => {
     return{
@@ -125,6 +126,7 @@ export const finalizaCompra = (userKey, listaCompras, valorCompra, nomeMercado, 
         }
         firebase.firestore().collection('usuarios').doc(`${userKey}`).collection('entregas').add(compraRealizada)
         .then(() => {
+            dispatch(fetchEntregas(userKey))
             dispatch(compraFinalizada())
         })
         .catch((err) => {
