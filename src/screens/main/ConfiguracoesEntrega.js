@@ -27,110 +27,115 @@ class ConfiguracoesEntrega extends Component {
     }
 
     componentDidUpdate = (prevProps) => {
-        if(prevProps.isLoadingEntregas && !this.props.isLoadingEntregas){
-            this.setState({ localEntrega: { ...this.props.configuracaoEntrega }})
+        if (prevProps.isLoadingEntregas && !this.props.isLoadingEntregas) {
+            this.setState({ localEntrega: { ...this.props.configuracaoEntrega } })
         }
     }
 
-    componentDidMount(){
-        this.setState({ localEntrega: { ...this.props.configuracaoEntrega }})
+    componentDidMount() {
+        this.props.onFetchEntregas(this.props.usuarioKey)
+        this.setState({ localEntrega: { ...this.props.configuracaoEntrega } })
     }
 
     renderEncomendas = () => {
-        if(this.props.entregas.length>0){
-            return(
+        if(this.props.entregas.length>0) {
+            return (
                 <View>
                     <FlatList
-                            data={this.props.entregas}
-                            keyExtractor={(item, index) => `${index}`}
-                            renderItem={({ item, index }) => (
-                                    <Row style={{ minHeight: 80, marginTop: 10 }}>
-                                        <Card>
-                                            <CardItem header>
-                                                <Text>{item.data}</Text>
-                                            </CardItem>
-                                            <CardItem>
-                                                <Body>
-                                                    <Text>
-                                                    {item.mercado}
-                                                    </Text>
-                                                </Body>
-                                            </CardItem>
-                                            <CardItem footer>
-                                                <Text>{item.valor}</Text>
-                                            </CardItem>
-                                        </Card>
-                                    </Row>
-                            )}
-                        />
+                        data={this.props.entregas}
+                        keyExtractor={(item, index) => `${index}`}
+                        renderItem={({ item, index }) => (                            
+                            <Row style={{ minHeight: 80, marginTop: 10, alignItems: 'center', justifyContent: 'center' }}>
+                                <Card style={{ width: '100%' }}>
+                                    <CardItem header style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                        <Text style={{...styles.informacoesText, fontSize: 16}}>Mercado: {item.mercado}</Text>
+                                    </CardItem>
+                                    <CardItem footer style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                        <Text style={styles.informacoesText}>Valor: R${" "+item.valor}</Text>
+                                    </CardItem>
+                                </Card>
+                            </Row>
+                        )}
+                    />
                 </View>
             )
-        }else{
-            return(
-                <View>
-                    <Text>Você ainda não solicitou nenhuma entrega.</Text>
+        } else {
+            return (
+                <View style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={{...styles.informacoesText, textAlign: 'center'}}>Você ainda não solicitou nenhuma entrega.</Text>
                 </View>
             )
         }
     }
 
     renderMode = () => {
-        switch(this.state.mode){
+        switch (this.state.mode) {
             case 'configuraEndereco': {
-                return(
+                return (
                     <View>
-                        <Row>
+                        <Row style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={styles.tituloGrande}>
+                                Endereço de Entrega
+                            </Text>
+                        </Row>
+                        <Row style={{ marginTop: 20 }}>
                             <Col>
-                                <Text>                                
-                                    Endereço de Entrega
-                                </Text>
                             </Col>
                             <Col>
-                                <Button onPress={() => this.setState({mode: 'minhasEncomendas'})}>
-                                    <Text>Minhas Encomendas</Text>
+                                <Button style={styles.button} onPress={() => this.setState({ mode: 'minhasEncomendas' })}>
+                                    
+                                    <Text style={styles.buttonText}>Minhas Encomendas</Text>
                                 </Button>
                             </Col>
-                        </Row>                        
-                        <Row>
-                            <Item style={{width: '100%'}}>
-                                <Icon name="md-at"/>
-                                <Input 
-                                value={this.state.localEntrega.rua}
-                                placeholder={this.state.localEntrega.rua.length>0 ? this.state.localEntrega.rua : 'Rua'} 
-                                onChangeText={(text) => this.setState({localEntrega: { ...this.state.localEntrega, rua: text}})}/>
-                            </Item>
                         </Row>
-                        <Row>
-                            <Item style={{width: '100%'}}>
-                                <Icon name="md-key"/>
-                                <Input 
-                                value={this.state.localEntrega.numero}
-                                placeholder={this.state.localEntrega.numero.length>0 ? this.state.localEntrega.numero : 'Número'} 
-                                onChangeText={(text) => this.setState({localEntrega: { ...this.state.localEntrega, numero: text}})}/>
-                            </Item>
-                        </Row>
-                        <Row>
-                            <Item style={{width: '100%'}}>
-                                <Icon name="md-key"/>
+                        <Row style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center' }}>
+                            <Item style={{ width: '100%' }}>
+                                <Icon name="md-at" />
                                 <Input
-                                value={this.state.localEntrega.complemento} 
-                                placeholder={this.state.localEntrega.complemento.length>0 ? this.state.localEntrega.complemento : 'Complemento'} 
-                                onChangeText={(text) => this.setState({localEntrega: { ...this.state.localEntrega, complemento: text}})}/>
+                                    value={this.state.localEntrega.rua}
+                                    style={styles.informacoesText}
+                                    placeholder={this.state.localEntrega.rua.length > 0 ? this.state.localEntrega.rua : 'Rua'}
+                                    onChangeText={(text) => this.setState({ localEntrega: { ...this.state.localEntrega, rua: text } })} />
                             </Item>
                         </Row>
-                        <Row>
-                            <Item style={{width: '100%'}}>
-                                <Icon name="md-key"/>
+                        <Row style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center' }}>
+                            <Item style={{ width: '100%' }}>
+                                <Icon name="md-key" />
                                 <Input
-                                value={this.state.localEntrega.bairro} 
-                                placeholder={this.state.localEntrega.bairro.length>0 ? this.state.localEntrega.bairro : 'Bairro'} 
-                                onChangeText={(text) => this.setState({localEntrega: { ...this.state.localEntrega, bairro: text}})}/>
+                                    value={this.state.localEntrega.numero}
+                                    style={styles.informacoesText}
+                                    placeholder={this.state.localEntrega.numero.length > 0 ? this.state.localEntrega.numero : 'Número'}
+                                    onChangeText={(text) => this.setState({ localEntrega: { ...this.state.localEntrega, numero: text } })} />
                             </Item>
                         </Row>
-                        <Row>
-                            <Button onPress={() => this.alteraEntrega()}>
-                                <Text>Alterar</Text>
-                            </Button>
+                        <Row style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center' }}>
+                            <Item style={{ width: '100%' }}>
+                                <Icon name="md-key" />
+                                <Input
+                                    value={this.state.localEntrega.complemento}
+                                    style={styles.informacoesText}
+                                    placeholder={this.state.localEntrega.complemento.length > 0 ? this.state.localEntrega.complemento : 'Complemento'}
+                                    onChangeText={(text) => this.setState({ localEntrega: { ...this.state.localEntrega, complemento: text } })} />
+                            </Item>
+                        </Row>
+                        <Row style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center' }}>
+                            <Item style={{ width: '100%' }}>
+                                <Icon name="md-key" />
+                                <Input
+                                    value={this.state.localEntrega.bairro}
+                                    style={styles.informacoesText}
+                                    placeholder={this.state.localEntrega.bairro.length > 0 ? this.state.localEntrega.bairro : 'Bairro'}
+                                    onChangeText={(text) => this.setState({ localEntrega: { ...this.state.localEntrega, bairro: text } })} />
+                            </Item>
+                        </Row>
+                        <Row style={{ marginTop: 30 }}>
+                            <Col>
+                            </Col>
+                            <Col>
+                                <Button style={styles.button} onPress={() => this.alteraEntrega()}>
+                                    <Text style={styles.buttonText}>Alterar</Text>
+                                </Button>
+                            </Col>
                         </Row>
                     </View>
                 )
@@ -138,15 +143,18 @@ class ConfiguracoesEntrega extends Component {
             case 'minhasEncomendas': {
                 return (
                     <View>
-                        <Row>
+                        <Row style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={styles.tituloGrande}>
+                                Minhas Encomendas
+                            </Text>
+                        </Row>
+                        <Row style={{ marginTop: 20 }}>
                             <Col>
-                                <Text>                                
-                                    Minhas Encomendas
-                                </Text>
                             </Col>
                             <Col>
-                                <Button onPress={() => this.setState({mode: 'configuraEndereco'})}>
-                                    <Text>Endereço de Entrega</Text>
+                                <Button style={styles.button} onPress={() => this.setState({ mode: 'configuraEndereco' })}>
+                                    
+                                    <Text style={styles.buttonText}>Meu Endereço</Text>
                                 </Button>
                             </Col>
                         </Row>
@@ -155,7 +163,7 @@ class ConfiguracoesEntrega extends Component {
                 )
             }
             default: {
-                return(
+                return (
                     <View>
 
                     </View>
@@ -165,25 +173,25 @@ class ConfiguracoesEntrega extends Component {
     }
 
     loadingOuNao = () => {
-        if(this.props.isLoadingEntregas){
-            return(
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        if (this.props.isLoadingEntregas) {
+            return (
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                     <Spinner color='#C20114' />
                 </View>
             )
-        }else{
-            return(
+        } else {
+            return (
                 <View>
-                    <Grid>
+                    <Grid style={{alignItems: 'center', justifyContent: 'center'}}>
                         {this.renderMode()}
                     </Grid>
                 </View>
             )
         }
     }
- 
-    render(){
-        return(
+
+    render() {
+        return (
             <Container style={styles.container}>
                 <Header />
                 <Content padder>
@@ -193,17 +201,22 @@ class ConfiguracoesEntrega extends Component {
             </Container>
         )
     }
-    
+
 }
 
 const styles = StyleSheet.create({
     container: commonStyle.container,
-    informacoesText: commonStyle.informacoesText
+    informacoesText: commonStyle.informacoesText,
+    buttonTextGrande: commonStyle.buttonTextGrande,
+    button: commonStyle.button,
+    titulo: commonStyle.tituloText,
+    tituloGrande: commonStyle.superTituloText,
+    buttonText: commonStyle.buttonTextNormal
 })
 
 
-const mapStateToProps = ( { user }) => {
-    return {        
+const mapStateToProps = ({ user }) => {
+    return {
         usuarioKey: user.key,
         configuracaoEntrega: user.configuracaoEntrega,
         entregas: user.minhasEntregas,
@@ -212,7 +225,7 @@ const mapStateToProps = ( { user }) => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return{
+    return {
         onFetchEntregas: (userKey) => dispatch(fetchEntregas(userKey)),
         onAlteraEntrega: (novoLocal, userKey) => dispatch(alteraLocalEntrega(novoLocal, userKey))
     }
