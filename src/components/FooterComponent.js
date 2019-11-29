@@ -9,7 +9,7 @@ class FooterComponent extends Component {
         return (            
             <Footer style={styles.footer}>
                 <FooterTab style={styles.footerTab}>
-                    <Text>iMarket {" "}                    
+                    <Text style={{fontFamily: 'Montserrat Bold', fontWeight: 'normal', fontSize: 14, color: '#C20114'}}>iMarket {" "}                    
                     <Icon name="copyright" size={14} color="#C20114"/></Text>
                 </FooterTab>
             </Footer>

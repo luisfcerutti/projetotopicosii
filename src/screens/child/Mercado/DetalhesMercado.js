@@ -1,7 +1,7 @@
 //PADRÃO
 import React, { Component } from 'react'
 import { StyleSheet, View, FlatList, TouchableOpacity } from 'react-native'
-import { Container, Content, Text, Spinner, Button, Card, CardItem, Body } from 'native-base'
+import { Container, Content, Text, Spinner, Button, Card, CardItem, Body, Badge, Icon } from 'native-base'
 import { Row, Grid, Col } from 'react-native-easy-grid'
 import { connect } from 'react-redux'
 import { Dropdown } from 'react-native-material-dropdown';
@@ -68,25 +68,21 @@ class DetalhesMercado extends Component {
                             keyExtractor={(item, index) => `${index}`}
                             renderItem={({ item, index }) => (
                                 
-                                    <Row style={{ minHeight: 80, marginTop: 10 }}>
-                                        <Card>
-                                            <CardItem header>
-                                            <Text>{item.nome}</Text>
+                                <Row style={{ minHeight: 30, marginTop: 10, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Card style={{ width: '80%' }}>
+                                        <CardItem header style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                            <Text style={{...styles.informacoesText, fontSize: 16}}>{item.nome}{"  "}</Text>
+                                            <Badge>
+                                                    <Text style={{...styles.informacoesText, color: '#FFFFFF'}}>{"R$ "}{item.preco}</Text>
+                                            </Badge>
+                                        </CardItem>
+                                        <TouchableOpacity onPress={()=>this.addListaCompras(item)}>
+                                            <CardItem footer style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                                <Text style={styles.informacoesText}>Adicionar</Text>
                                             </CardItem>
-                                            <CardItem>
-                                                <Body>
-                                                    <Text>
-                                                    {item.preco}
-                                                    </Text>
-                                                </Body>
-                                            </CardItem>
-                                            <TouchableOpacity onPress={()=>this.addListaCompras(item)}>
-                                                <CardItem footer>
-                                                    <Text>Adicionar</Text>
-                                                </CardItem>
-                                            </TouchableOpacity>
-                                        </Card>
-                                    </Row>
+                                        </TouchableOpacity>
+                                    </Card>
+                                </Row>
                             )}
                         />
                     </View>
@@ -98,27 +94,23 @@ class DetalhesMercado extends Component {
                         <FlatList
                             data={this.props.listaProdutos.frutas.listaProdutos}
                             keyExtractor={(item, index) => `${index}`}
-                            renderItem={({ item, index }) => (
-                                
-                                    <Row style={{ minHeight: 80, marginTop: 10 }}>
-                                        <Card>
-                                            <CardItem header>
-                                            <Text>{item.nome}</Text>
-                                            </CardItem>
-                                            <CardItem>
-                                                <Body>
-                                                    <Text>
-                                                    {item.preco}
-                                                    </Text>
-                                                </Body>
-                                            </CardItem>
-                                            <TouchableOpacity onPress={()=>this.addListaCompras(item)}>
-                                                <CardItem footer>
-                                                    <Text>Adicionar</Text>
+                            renderItem={({ item, index }) => (                              
+                                    
+                                        <Row style={{ minHeight: 30, marginTop: 10, alignItems: 'center', justifyContent: 'center' }}>
+                                            <Card style={{ width: '80%' }}>
+                                                <CardItem header style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                                    <Text style={{...styles.informacoesText, fontSize: 16}}>{item.nome}{"  "}</Text>
+                                                    <Badge>
+                                                            <Text style={{...styles.informacoesText, color: '#FFFFFF'}}>{"R$ "}{item.preco}</Text>
+                                                    </Badge>
                                                 </CardItem>
-                                            </TouchableOpacity>
-                                        </Card>
-                                    </Row>
+                                                <TouchableOpacity onPress={()=>this.addListaCompras(item)}>
+                                                    <CardItem footer style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                                        <Text style={styles.informacoesText}>Adicionar</Text>
+                                                    </CardItem>
+                                                </TouchableOpacity>
+                                            </Card>
+                                        </Row>
                             )}
                         />
                     </View>
@@ -132,25 +124,21 @@ class DetalhesMercado extends Component {
                             keyExtractor={(item, index) => `${index}`}
                             renderItem={({ item, index }) => (
                                 
-                                    <Row style={{ minHeight: 80, marginTop: 10 }}>
-                                        <Card>
-                                            <CardItem header>
-                                            <Text>{item.nome}</Text>
+                                <Row style={{ minHeight: 30, marginTop: 10, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Card style={{ width: '80%' }}>
+                                        <CardItem header style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                            <Text style={{...styles.informacoesText, fontSize: 16}}>{item.nome}{"  "}</Text>
+                                            <Badge>
+                                                    <Text style={{...styles.informacoesText, color: '#FFFFFF'}}>{"R$ "}{item.preco}</Text>
+                                            </Badge>
+                                        </CardItem>
+                                        <TouchableOpacity onPress={()=>this.addListaCompras(item)}>
+                                            <CardItem footer style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                                <Text style={styles.informacoesText}>Adicionar</Text>
                                             </CardItem>
-                                            <CardItem>
-                                                <Body>
-                                                    <Text>
-                                                    {item.preco}
-                                                    </Text>
-                                                </Body>
-                                            </CardItem>
-                                            <TouchableOpacity onPress={()=>this.addListaCompras(item)}>
-                                                <CardItem footer>
-                                                    <Text>Adicionar</Text>
-                                                </CardItem>
-                                            </TouchableOpacity>
-                                        </Card>
-                                    </Row>
+                                        </TouchableOpacity>
+                                    </Card>
+                                </Row>
                             )}
                         />
                     </View>
@@ -170,47 +158,47 @@ class DetalhesMercado extends Component {
         if(this.props.listaCompras.length>0){
             return(
                 <View>
+                    <Row style={{marginTop: 30}}>
+                        <Col style={{alignItems: 'center', justifyContent: 'center'}}>
+                            <Text style={styles.informacoesText}>Total: R${" "+this.state.totalCompra}</Text>
+                        </Col>
+                        <Col style={{alignItems: 'center', justifyContent: 'center'}}>
+                            <Button style={styles.button} onPress={() => {this.finalizaCompra()}}>
+                                <Icon name='ios-card' />
+                                <Text style={styles.buttonText}>Comprar</Text>
+                            </Button>
+                        </Col>
+                    </Row>
                      <FlatList
                             data={this.props.listaCompras}
                             keyExtractor={(item, index) => `${index}`}
                             renderItem={({ item, index }) => (
                                 
-                                    <Row style={{ minHeight: 80, marginTop: 10 }}>
-                                        <Card>
-                                            <CardItem header>
-                                            <Text>{item.nome}</Text>
+                                <Row style={{ minHeight: 30, marginTop: 10, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Card style={{ width: '80%' }}>
+                                        <CardItem header style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                            <Text style={{...styles.informacoesText, fontSize: 16}}>{item.nome}{"  "}</Text>
+                                            <Badge>
+                                                    <Text style={{...styles.informacoesText, color: '#FFFFFF'}}>{"R$ "}{item.preco}</Text>
+                                            </Badge>
+                                        </CardItem>
+                                        <TouchableOpacity onPress={()=>this.removeListaCompras(index)}>
+                                            <CardItem footer style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                                <Text style={styles.informacoesText}>Remover</Text>
                                             </CardItem>
-                                            <CardItem>
-                                                <Body>
-                                                    <Text>
-                                                    {item.preco}
-                                                    </Text>
-                                                </Body>
-                                            </CardItem>
-                                            <TouchableOpacity onPress={()=>this.removeListaCompras(index)}>
-                                                <CardItem footer>
-                                                    <Text>Remover</Text>
-                                                </CardItem>
-                                            </TouchableOpacity>
-                                        </Card>
-                                    </Row>
+                                        </TouchableOpacity>
+                                    </Card>
+                                </Row>
                             )}
                         />
-                        <Row>
-                            <Text>Total: R${" "+this.state.totalCompra}</Text>
-                        </Row>
-                        <Row style={{marginTop: 30}}>
-                            <Button onPress={() => {this.finalizaCompra()}}>
-                                <Text>Comprar</Text>
-                            </Button>
-                        </Row>
+                        
                 </View>
             )
         }else{
             return(
                 <View>
-                    <Row>
-                        <Text>Ainda não há nada no seu carrinho.</Text>
+                    <Row style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+                        <Text style={styles.informacoesText}>Ainda não há nada no seu carrinho.</Text>
                     </Row>
                 </View>
             )
@@ -222,15 +210,26 @@ class DetalhesMercado extends Component {
             case 'listaMercado': {
                 return(
                     <View>
-                        <Row>
-                            <Button onPress={() => {this.setState({mode: 'listaCompras'})}}>
-                                <Text>Carrinho</Text>
-                            </Button>
+                        <Row style={{marginTop: 20}}>
+                            <Col style={{alignItems: 'center', justifyContent: 'center'}} size={2}>
+                                <Text style={styles.informacoesText}>
+                                    Nota
+                                </Text>
+                                <Badge style={{alignSelf: 'center'}}>
+                                    <Text>{this.props.classificacao}</Text>
+                                </Badge>
+                            </Col>
+                            <Col size={2} style={{justifyContent: 'center', alignItems: 'center'}}>                                
+                                <Button style={styles.button} onPress={() => {this.setState({mode: 'listaCompras'})}}>
+                                    <Icon name='ios-cart' />
+                                    <Text style={styles.buttonText}>Carrinho</Text>
+                                </Button>
+                            </Col>
                         </Row>
-                        <Row>
-                            <Text>Categoria</Text>
+                        <Row style={{marginTop: 20, alignItems: 'center', justifyContent: 'center'}}>
+                            <Text style={styles.informacoesText}>Categoria</Text>
                         </Row>
-                        <Row>
+                        <Row style={{marginTop: 20, alignItems: 'center', justifyContent: 'center'}}>
                             <Dropdown
                                     containerStyle={{
                                         height: 40,
@@ -258,13 +257,24 @@ class DetalhesMercado extends Component {
             case 'listaCompras': {
                 return (
                     <View>
-                        <Row>
-                            <Button onPress={() => {this.setState({mode: 'listaMercado'})}}>
-                                <Text>Produtos</Text>
-                            </Button>
+                        <Row style={{marginTop: 20}}>
+                            <Col style={{alignItems: 'center', justifyContent: 'center'}} size={2}>
+                                <Text style={styles.informacoesText}>
+                                    Nota
+                                </Text>
+                                <Badge style={{alignSelf: 'center'}}>
+                                    <Text>{this.props.classificacao}</Text>
+                                </Badge>
+                            </Col>
+                            <Col size={2} style={{justifyContent: 'center', alignItems: 'center'}}>                                
+                                <Button style={styles.button} onPress={() => {this.setState({mode: 'listaMercado'})}}>
+                                    <Icon name='ios-list-box' />
+                                    <Text style={styles.buttonText}>Produtos</Text>
+                                </Button>
+                            </Col>
                         </Row>
-                        <Row>
-                            <Text>Meu Carrinho</Text>
+                        <Row style={{marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={styles.titulo}>Meu Carrinho</Text>
                         </Row>
                         {this.renderDadosCarrinho()}
                     </View>
@@ -291,13 +301,8 @@ class DetalhesMercado extends Component {
             return(
                 <View>
                     <Grid>
-                        <Row>
-                            <Text>{this.props.nomeMercado}</Text>
-                        </Row>
-                        <Row>
-                            <Text>
-                                Classificacao: {this.props.classificacao}
-                            </Text>
+                        <Row style={{marginTop: 20, alignItems: 'center', justifyContent: 'center'}}>
+                            <Text style={styles.tituloGrande}>{this.props.nomeMercado}</Text>
                         </Row>
                         {this.renderMode()}
                     </Grid>
@@ -332,7 +337,13 @@ class DetalhesMercado extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: commonStyle.container
+    container: commonStyle.container,
+    informacoesText: commonStyle.informacoesText,
+    buttonTextGrande: commonStyle.buttonTextGrande,
+    button: commonStyle.button,
+    titulo: commonStyle.tituloText,
+    buttonText: commonStyle.buttonTextNormal,
+    tituloGrande: commonStyle.superTituloText
 })
 
 
